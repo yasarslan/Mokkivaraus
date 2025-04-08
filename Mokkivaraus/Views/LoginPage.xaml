@@ -1,0 +1,62 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Mokkivaraus.Views.LoginPage"
+             Title=""
+             BackgroundImageSource="forest.png">
+
+    <Grid VerticalOptions="CenterAndExpand"
+          HorizontalOptions="CenterAndExpand"
+          Padding="30">
+
+        <Frame BackgroundColor="#CCFFFFFF"
+               CornerRadius="20"
+               Padding="20"
+               HasShadow="True"
+               Opacity="0.95"
+               WidthRequest="400">
+
+            <VerticalStackLayout Spacing="12">
+
+                <Label Text="Tervetuloa Mökkivaraukseen"
+                       FontSize="18"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center"
+                       TextColor="Black"/>
+
+                <Label Text="Käyttäjätunnus"
+                       TextColor="Black"/>
+                <Entry x:Name="UsernameEntry"
+                       Placeholder=""
+                       BackgroundColor="White"
+                       TextColor="Black"
+                       HeightRequest="40"
+                       PlaceholderColor="Gray"/>
+
+                <Label Text="Salasana"
+                       TextColor="Black"/>
+                <Entry x:Name="PasswordEntry"
+                       Placeholder=""
+                       IsPassword="True"
+                       BackgroundColor="White"
+                       TextColor="Black"
+                       HeightRequest="40"
+                       PlaceholderColor="Gray"/>
+
+                <Button Text="Kirjaudu sisään"
+                        BackgroundColor="#3E7A55"
+                        TextColor="White"
+                        CornerRadius="10"
+                        Clicked="OnLoginClicked"/>
+
+                <Label Text="Unohtuiko salasana?"
+                     FontSize="13"
+                    TextColor="Gray"
+                    HorizontalOptions="Center">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnForgotPasswordTapped" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </VerticalStackLayout>
+        </Frame>
+    </Grid>
+</ContentPage>

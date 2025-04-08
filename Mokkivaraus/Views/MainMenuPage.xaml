@@ -1,0 +1,93 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Mokkivaraus.Views.MainMenuPage"
+             BackgroundImageSource="forest.png">
+
+    <Grid ColumnDefinitions="220,*">
+
+        <!-- Sivupalkki -->
+        <VerticalStackLayout BackgroundColor="#2E5632" Padding="20" Spacing="25" WidthRequest="220">
+
+            <!-- Logo ja otsikko -->
+            <HorizontalStackLayout Spacing="10" VerticalOptions="Start">
+                <Image Source="puulogo.png" WidthRequest="24" HeightRequest="24"/>
+                <Label Text="Mökkivaraus" TextColor="White" FontSize="18" FontAttributes="Bold"/>
+            </HorizontalStackLayout>
+
+            <!-- Valikkopainikkeet -->
+            <HorizontalStackLayout Spacing="10" Padding="5">
+                <Image Source="mokit.png" WidthRequest="24" HeightRequest="24"/>
+                <Label Text="Mökit" TextColor="White" FontSize="16"/>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout Spacing="10" Padding="5">
+                <Image Source="varaukset.png" WidthRequest="24" HeightRequest="24"/>
+                <Label Text="Varaukset" TextColor="White" FontSize="16"/>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout Spacing="10" Padding="5">
+                <Image Source="asiakkaat.png" WidthRequest="24" HeightRequest="24"/>
+                <Label Text="Asiakkaat" TextColor="White" FontSize="16"/>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout Spacing="10" Padding="5">
+                <Image Source="raporttilogo.png" WidthRequest="24" HeightRequest="24"/>
+                <Label Text="Raportit" TextColor="White" FontSize="16"/>
+            </HorizontalStackLayout>
+
+            <!-- Väli ennen uloskirjautumista -->
+            <BoxView HeightRequest="140" BackgroundColor="Transparent" />
+
+            <!-- Kirjaudu ulos -->
+            <HorizontalStackLayout Spacing="10" Padding="5" VerticalOptions="End">
+                <Image Source="uloslogo.png" WidthRequest="24" HeightRequest="24"/>
+                <Label Text="Kirjaudu ulos" TextColor="White" FontSize="16">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnLogoutTapped" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </HorizontalStackLayout>
+
+        </VerticalStackLayout>
+        
+
+        <!-- Pääsisältö -->
+        <VerticalStackLayout Padding="30" Spacing="30" Grid.Column="1">
+
+            <!-- Tervetulotoivotus -->
+            <!-- BACKEND: Tähän tuodaan sisäänkirjautuneen käyttäjän nimi -->
+            <Label Text="{Binding LoggedInUserName}" FontSize="24" FontAttributes="Bold" TextColor="#2E5632"/>
+
+            <!-- Yhteenveto-ruudut -->
+            <HorizontalStackLayout Spacing="20">
+
+                <Frame BackgroundColor="White" CornerRadius="16" Padding="20" WidthRequest="150">
+                    <VerticalStackLayout>
+                        <Label Text="Mökit yhteensä" FontSize="14" TextColor="Gray"/>
+                        <!-- BACKEND: Mökien kokonaismäärä -->
+                        <Label Text="{Binding TotalCabins}" FontSize="24" FontAttributes="Bold"/>
+                    </VerticalStackLayout>
+                </Frame>
+
+                <Frame BackgroundColor="White" CornerRadius="16" Padding="20" WidthRequest="150">
+                    <VerticalStackLayout>
+                        <Label Text="Varauksia aktiivisena" FontSize="14" TextColor="Gray"/>
+                        <!-- BACKEND: Aktiivisten varausten määrä -->
+                        <Label Text="{Binding ActiveReservations}" FontSize="24" FontAttributes="Bold"/>
+                    </VerticalStackLayout>
+                </Frame>
+            </HorizontalStackLayout>
+
+            <!-- Toimintopainikkeet -->
+            <HorizontalStackLayout Spacing="20">
+                <!-- BACKEND: Klikattaessa ohjataan mökin lisäyssivulle -->
+                <Button Text="+ Lisää mökki" BackgroundColor="#D8B98F" TextColor="Black" Clicked="OnAddCabinClicked"/>
+
+                <!-- BACKEND: Klikattaessa ohjataan varauksen luontisivulle -->
+                <Button Text="+ Tee varaus" BackgroundColor="#D8B98F" TextColor="Black" Clicked="OnAddReservationClicked"/>
+            </HorizontalStackLayout>
+
+        </VerticalStackLayout>
+    </Grid>
+
+</ContentPage>
