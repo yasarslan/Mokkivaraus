@@ -36,7 +36,7 @@
             </HorizontalStackLayout>
 
             <!-- Väli ennen uloskirjautumista -->
-            <BoxView HeightRequest="140" BackgroundColor="Transparent" />
+            <BoxView HeightRequest="190" BackgroundColor="Transparent" />
 
             <!-- Kirjaudu ulos -->
             <HorizontalStackLayout Spacing="10" Padding="5" VerticalOptions="End">
