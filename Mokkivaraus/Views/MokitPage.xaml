@@ -1,8 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Mokkivaraus.Views.MainMenuPage"
+             x:Class="Mokkivaraus.Views.MokitPage"
+             Title=""
              BackgroundImageSource="forest.png">
-
     <Grid ColumnDefinitions="220,*">
 
         <!-- Sivupalkki -->
@@ -16,10 +17,10 @@
 
             <!-- logo ja sidebar välillä viiva -->
             <BoxView 
-                    HeightRequest="1" 
-                    Color="#80FFFFFF" 
-                    HorizontalOptions="Fill"
-                    Margin="0,0.5,0,0.5"/>
+                HeightRequest="1" 
+                Color="#80FFFFFF" 
+                HorizontalOptions="Fill"
+                Margin="0,0.5,0,0.5"/>
 
             <!-- Valikkopainikkeet -->
             <Grid Style="{StaticResource SidebarButtonStyle}">
@@ -107,72 +108,37 @@
             </Grid>
 
         </VerticalStackLayout>
-        
-
-        <!-- Pääsisältö -->
-        <VerticalStackLayout Padding="30" Spacing="30" Grid.Column="1">
-
-            <!-- Tervetulotoivotus -->
-            <!-- BACKEND: Tähän tuodaan sisäänkirjautuneen käyttäjän nimi -->
-            <Label Text="{Binding LoggedInUserName}" FontSize="24" FontAttributes="Bold" TextColor="#2E5632"/>
-
-            <!-- Yhteenveto-ruudut -->
-            <HorizontalStackLayout Spacing="20">
-
-                <Frame BackgroundColor="White" CornerRadius="16" Padding="20" WidthRequest="150">
-                    <VerticalStackLayout>
-                        <Label Text="Mökit yhteensä" FontSize="14" TextColor="Gray"/>
-                        <!-- BACKEND: Mökien kokonaismäärä -->
-                        <Label Text="{Binding TotalCabins}" FontSize="24" FontAttributes="Bold"/>
-                    </VerticalStackLayout>
-                </Frame>
-
-                <Frame BackgroundColor="White" CornerRadius="16" Padding="20" WidthRequest="150">
-                    <VerticalStackLayout>
-                        <Label Text="Varauksia aktiivisena" FontSize="14" TextColor="Gray"/>
-                        <!-- BACKEND: Aktiivisten varausten määrä -->
-                        <Label Text="{Binding ActiveReservations}" FontSize="24" FontAttributes="Bold"/>
-                    </VerticalStackLayout>
-                </Frame>
-            </HorizontalStackLayout>
-
-            
-
-        </VerticalStackLayout>
     </Grid>
 
 
+<!-- hover css style -->
+<ContentPage.Resources>
+    <ResourceDictionary>
+        <Style x:Key="SidebarButtonStyle" TargetType="Grid">
+            <Setter Property="HeightRequest" Value="40"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="BackgroundColor" Value="Transparent"/>
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup Name="CommonStates">
+                        <VisualState Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="Transparent"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState Name="PointerOver">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="#3A6B44"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ResourceDictionary>
+</ContentPage.Resources>
 
-    <!-- hover css style -->
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <Style x:Key="SidebarButtonStyle" TargetType="Grid">
-                <Setter Property="HeightRequest" Value="40"/>
-                <Setter Property="Padding" Value="10"/>
-                <Setter Property="BackgroundColor" Value="Transparent"/>
-                <Setter Property="VisualStateManager.VisualStateGroups">
-                    <VisualStateGroupList>
-                        <VisualStateGroup Name="CommonStates">
-                            <VisualState Name="Normal">
-                                <VisualState.Setters>
-                                    <Setter Property="BackgroundColor" Value="Transparent"/>
-                                </VisualState.Setters>
-                            </VisualState>
-                            <VisualState Name="PointerOver">
-                                <VisualState.Setters>
-                                    <Setter Property="BackgroundColor" Value="#3A6B44"/>
-                                </VisualState.Setters>
-                            </VisualState>
-                        </VisualStateGroup>
-                    </VisualStateGroupList>
-                </Setter>
-            </Style>
-        </ResourceDictionary>
-    </ContentPage.Resources>
-
-    <!-- hover css style -->
-
+<!-- hover css style -->
 
 </ContentPage>
-
-<!--testikommentti -->
+    

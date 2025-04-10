@@ -1,23 +1,11 @@
-﻿namespace Mokkivaraus.Views;
+namespace Mokkivaraus.Views;
 
-public partial class MainMenuPage : ContentPage
+public partial class MokitPage : ContentPage
 {
-	public MainMenuPage()
+	public MokitPage()
 	{
 		InitializeComponent();
 	}
-    protected override void OnAppearing()
-    {
-        base.OnAppearing();
-        NavigationPage.SetHasBackButton(this, false); // hide back button
-    }
-
-
-
-
-
-
-
 
     //MENU - sidebar////////////////////
 
@@ -64,6 +52,4 @@ public partial class MainMenuPage : ContentPage
 
         Navigation.RemovePage(this);
     }
-
-
 }
