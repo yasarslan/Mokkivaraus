@@ -1,15 +1,30 @@
-﻿namespace Mokkivaraus.Views;
+﻿using System.Data;
+
+namespace Mokkivaraus.Views;
 
 public partial class MainMenuPage : ContentPage
 {
-	public MainMenuPage()
+    DatabaseHelper dbHelper = new DatabaseHelper();
+    public MainMenuPage()
 	{
 		InitializeComponent();
-	}
-    protected override void OnAppearing()
+        LoadData();
+    }
+
+    private async void LoadData()
+    {
+        DataTable dt = await dbHelper.GetDataAsync("SELECT * FROM mokki");
+        foreach (DataRow row in dt.Rows)
+                {
+                    Console.WriteLine(row["mokkinimi"]); 
+        }
+    }
+
+
+    protected override  void OnAppearing()
     {
         base.OnAppearing();
-        NavigationPage.SetHasBackButton(this, false); // hide back button
+        NavigationPage.SetHasBackButton(this, false); // hide back button        
     }
 
 
