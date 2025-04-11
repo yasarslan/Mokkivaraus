@@ -143,7 +143,7 @@
 
                 <CollectionView x:Name="MokkiListaView">
                     <CollectionView.Header>
-                        <Grid Padding="10,5" BackgroundColor="White" ColumnDefinitions="*,*,*,*,Auto">
+                        <Grid Padding="10,5" BackgroundColor="White" Margin="10" ColumnDefinitions="*,*,*,*,Auto">
                             <Label Text="Mökin nimi" FontAttributes="Bold" TextColor="#2E5632" />
                             <Label Text="Sijainti" FontAttributes="Bold" TextColor="#2E5632" Grid.Column="1" />
                             <Label Text="Hinta" FontAttributes="Bold" TextColor="#2E5632" Grid.Column="2" />
@@ -157,10 +157,10 @@
                         <DataTemplate>
                             <Frame BackgroundColor="White" Padding="10" Margin="0,5" CornerRadius="10">
                                 <Grid ColumnDefinitions="*,*,*,*,Auto">
-                                    <Label Text="{Binding MokkiNimi}" />
-                                    <Label Text="{Binding Katuosoite}" Grid.Column="1" />
+                                    <Label Text="{Binding Nimi}" />
+                                    <Label Text="{Binding Sijainti}" Grid.Column="1" />
                                     <Label Text="{Binding Hinta, StringFormat='{0} €'}" Grid.Column="2" />
-                                    <Label Text="{Binding Varustelu}" Grid.Column="3" />
+                                    <Label Text="{Binding Varaustilanne}" Grid.Column="3" />
                                     <Button Text="Poista"
                             Grid.Column="4"
                             BackgroundColor="#9B1C1C"
