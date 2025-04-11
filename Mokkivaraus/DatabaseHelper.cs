@@ -10,7 +10,7 @@ namespace Mokkivaraus
 {
     public class DatabaseHelper
     {
-        private string connectionString = "server=;port=;database=;user=;password=";
+        private readonly string connectionString = "server=;port=;database=vn;user=;password=";
             public async Task<DataTable> GetDataAsync(string query)
             {
                         DataTable dt = new DataTable();
@@ -34,6 +34,7 @@ namespace Mokkivaraus
                             Console.WriteLine("Database Error: " + ex.Message);
                         }
                         return dt;
+
             }
     }
 }

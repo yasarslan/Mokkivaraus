@@ -3,17 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MySql.Data.MySqlClient;
+using System.Data;
+
 
 namespace Mokkivaraus
 {
     public class Mokki
     {
-        public string Nimi { get; set; }
-        public string Sijainti { get; set; }
+        public int Mokki_id { get; set; }              
+        public string? MokkiNimi { get; set; }
+        public string? Postinumero { get; set; }
+        public string? Katuosoite { get; set; }
         public decimal Hinta { get; set; }
-        public int Kapasiteetti { get; set; }
-        public string Alue { get; set; }
-        public string Varaustilanne { get; set; } = "Vapaa"; // default "Vapaa"
+        public string? Kuvaus { get; set; }
+        public int Henkilomaara { get; set; }
+        public string? Alue { get; set; }
+        public string? Varustelu { get; set; } = "Vapaa"; // default "Vapaa"
     }
 
 }
