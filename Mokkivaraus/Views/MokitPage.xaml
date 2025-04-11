@@ -22,16 +22,18 @@
                 HorizontalOptions="Fill"
                 Margin="0,0.5,0,0.5"/>
 
-            <!-- Valikkopainikkeet -->
-            <Grid Style="{StaticResource SidebarButtonStyle}">
-                <Grid.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="OnMokitClicked"/>
-                </Grid.GestureRecognizers>
-                <HorizontalStackLayout Spacing="10">
-                    <Image Source="mokit.png" WidthRequest="24" HeightRequest="24"/>
-                    <Label Text="Mökit" TextColor="White" FontSize="16"/>
-                </HorizontalStackLayout>
-            </Grid>
+            <!-- Sidebar -->
+            <Border Stroke="white" StrokeThickness="1" StrokeShape="Rectangle">
+                <Grid Style="{StaticResource SidebarButtonStyle}">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnMokitClicked"/>
+                    </Grid.GestureRecognizers>
+                    <HorizontalStackLayout Spacing="10">
+                        <Image Source="mokit.png" WidthRequest="24" HeightRequest="24"/>
+                        <Label Text="Mökit" TextColor="White" FontSize="16"/>
+                    </HorizontalStackLayout>
+                </Grid>
+            </Border>
 
             <Grid Style="{StaticResource SidebarButtonStyle}">
                 <Grid.GestureRecognizers>
@@ -94,7 +96,7 @@
             </Grid>
 
             <!-- Väli ennen uloskirjautumista -->
-            <BoxView HeightRequest="10" BackgroundColor="Transparent" />
+            <BoxView HeightRequest="15" BackgroundColor="Transparent" />
 
             <!-- Kirjaudu ulos -->
             <Grid Style="{StaticResource SidebarButtonStyle}" VerticalOptions="End">
@@ -108,6 +110,127 @@
             </Grid>
 
         </VerticalStackLayout>
+
+        <!-- Oikea puoli / Main Content -->
+        <ScrollView Grid.Column="1">
+            <VerticalStackLayout Padding="30,40,30,30" Spacing="30">
+
+                <!-- otsikko -->
+                <Label Text="Mökkien hallinta" FontSize="28" FontAttributes="Bold" TextColor="#2E5632" />
+
+                <!-- Tiedot box -->
+                <HorizontalStackLayout Spacing="20">
+                    <Frame BackgroundColor="White" CornerRadius="16" Padding="20" WidthRequest="150">
+                        <VerticalStackLayout>
+                            <Label Text="Mökit yhteensä" FontSize="14" TextColor="Gray" />
+                            <Label Text="9" FontSize="24" FontAttributes="Bold" TextColor="#2E5632" />
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <Frame BackgroundColor="White" CornerRadius="16" Padding="20" WidthRequest="150">
+                        <VerticalStackLayout>
+                            <Label Text="Vapaat mökit" FontSize="14" TextColor="Gray" />
+                            <Label Text="4" FontSize="24" FontAttributes="Bold" TextColor="#2E5632" />
+                        </VerticalStackLayout>
+                    </Frame>
+                </HorizontalStackLayout>
+
+                <!-- lisää ja etsiä alue -->
+                <HorizontalStackLayout Spacing="15" VerticalOptions="Center">
+                    <Button Text="+ Lisää mökki" Clicked="OnAddCabinClicked" BackgroundColor="#D8B98F" TextColor="Black" />
+                    <SearchBar Placeholder="Hae mökkiä nimen perusteella" WidthRequest="300" />
+                </HorizontalStackLayout>
+
+                <CollectionView x:Name="MokkiListaView">
+                    <CollectionView.Header>
+                        <Grid Padding="10,5" BackgroundColor="White" ColumnDefinitions="*,*,*,*,Auto">
+                            <Label Text="Mökin nimi" FontAttributes="Bold" TextColor="#2E5632" />
+                            <Label Text="Sijainti" FontAttributes="Bold" TextColor="#2E5632" Grid.Column="1" />
+                            <Label Text="Hinta" FontAttributes="Bold" TextColor="#2E5632" Grid.Column="2" />
+                            <Label Text="Varaustilanne" FontAttributes="Bold" TextColor="#2E5632" Grid.Column="3" />
+                            <Label Text="" Grid.Column="4" />
+                        </Grid>
+                    </CollectionView.Header>
+                    
+                    <!--mökkilist-->
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame BackgroundColor="White" Padding="10" Margin="0,5" CornerRadius="10">
+                                <Grid ColumnDefinitions="*,*,*,*,Auto">
+                                    <Label Text="{Binding Nimi}" />
+                                    <Label Text="{Binding Sijainti}" Grid.Column="1" />
+                                    <Label Text="{Binding Hinta, StringFormat='{0} €'}" Grid.Column="2" />
+                                    <Label Text="{Binding Varaustilanne}" Grid.Column="3" />
+                                    <Button Text="Poista"
+                            Grid.Column="4"
+                            BackgroundColor="#9B1C1C"
+                            TextColor="White"
+                            WidthRequest="70"
+                            Clicked="OnPoistaClicked"
+                            CommandParameter="{Binding .}" />
+                                </Grid>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+
+
+        <!--POPUP SIVU FOR MÖKKILIST-->
+
+        <Grid x:Name="PopupOverlay"
+      BackgroundColor="#80000000"
+      IsVisible="False"
+      VerticalOptions="FillAndExpand"
+      HorizontalOptions="FillAndExpand"
+      Padding="0"
+      Grid.ColumnSpan="2">
+
+            <Grid HorizontalOptions="Center" VerticalOptions="Center">
+                <Frame BackgroundColor="White"
+               CornerRadius="20"
+               Padding="30"
+               WidthRequest="400"
+               HasShadow="True"
+               HorizontalOptions="Center"
+               VerticalOptions="Center">
+
+                    <VerticalStackLayout Spacing="20">
+                        <Label Text="Lisää uusi mökki"
+                       FontSize="20"
+                       FontAttributes="Bold"
+                       TextColor="#2E5632"
+                       HorizontalOptions="Center" />
+
+                        <Entry x:Name="NimiEntry" Placeholder="Mökin nimi" />
+                        <Entry x:Name="SijaintiEntry" Placeholder="Sijainti" />
+                        <Entry x:Name="HintaEntry" Placeholder="Hinta (€)" Keyboard="Numeric" />
+                        <Entry x:Name="KapasiteettiEntry" Placeholder="Kapasiteetti" Keyboard="Numeric" />
+                        <Entry x:Name="AlueEntry" Placeholder="Alue" />
+
+                        <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                            <Button Text="Tallenna"
+                            BackgroundColor="#D8B98F"
+                            TextColor="Black"
+                            Clicked="OnSaveCabinClicked"
+                            WidthRequest="100"/>
+
+                            <Button Text="Peruuta"
+                            BackgroundColor="#CCCCCC"
+                            TextColor="Black"
+                            Clicked="OnCancelPopupClicked"
+                            WidthRequest="100"/>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </Frame>
+            </Grid>
+        </Grid>
+
+        <!--popupend-->
+
     </Grid>
 
 
@@ -139,6 +262,9 @@
 </ContentPage.Resources>
 
 <!-- hover css style -->
+    
+    
+    
 
 </ContentPage>
     
