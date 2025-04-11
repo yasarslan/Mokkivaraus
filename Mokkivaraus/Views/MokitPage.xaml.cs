@@ -106,4 +106,9 @@ public partial class MokitPage : ContentPage
         mokkiLista.Remove(mokki);
     }
 
+    private void OnEditCabinClicked(object sender, EventArgs e)
+    {
+        // TODO: Backend 
+    }
+
 }
