@@ -157,10 +157,10 @@
                         <DataTemplate>
                             <Frame BackgroundColor="White" Padding="10" Margin="0,5" CornerRadius="10">
                                 <Grid ColumnDefinitions="*,*,*,*,Auto">
-                                    <Label Text="{Binding Nimi}" />
-                                    <Label Text="{Binding Sijainti}" Grid.Column="1" />
+                                    <Label Text="{Binding MokkiNimi}" />
+                                    <Label Text="{Binding Katuosoite}" Grid.Column="1" />
                                     <Label Text="{Binding Hinta, StringFormat='{0} €'}" Grid.Column="2" />
-                                    <Label Text="{Binding Varaustilanne}" Grid.Column="3" />
+                                    <Label Text="{Binding Varustelu}" Grid.Column="3" />
                                     <Button Text="Poista"
                             Grid.Column="4"
                             BackgroundColor="#9B1C1C"
