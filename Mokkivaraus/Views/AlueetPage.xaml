@@ -1,0 +1,71 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Mokkivaraus.Views.AlueetPage"
+             BackgroundImageSource="forest_background.jpg"
+             Title="Alueet">
+
+    <Grid Padding="30">
+        <VerticalStackLayout>
+
+            <Label Text="Alueiden hallinta"
+                   FontSize="22"
+                   FontAttributes="Bold"
+                   TextColor="#2E4E3F"
+                   Margin="0,10"
+                   HorizontalOptions="Start"/>
+
+            <HorizontalStackLayout Spacing="20"
+                                   Margin="0,10">
+                <Frame BackgroundColor="White"
+                       Padding="15"
+                       CornerRadius="10"
+                       WidthRequest="140"
+                       HeightRequest="80"
+                       VerticalOptions="Center">
+                    <VerticalStackLayout>
+                        <Label Text="Alueita yhteensä" FontSize="13" TextColor="Gray"/>
+                        <Label Text="6" FontSize="24" FontAttributes="Bold" TextColor="#2E4E3F"/>
+                    </VerticalStackLayout>
+                </Frame>
+
+                <Button Text="+ Lisää alue"
+                        BackgroundColor="#CDAF92"
+                        TextColor="White"
+                        CornerRadius="8"
+                        VerticalOptions="Center"
+                        Clicked="OnAddRegionClicked"/>
+            </HorizontalStackLayout>
+
+            <SearchBar Placeholder="Hae aluetta nimen perusteella"
+                       PlaceholderColor="Gray"
+                       TextColor="Black"
+                       SearchButtonPressed="OnSearchRegion"/>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Taulukon otsikko -->
+                <Label Text="Alueen nimi" Grid.Row="0" Grid.Column="0"
+                       FontAttributes="Bold" TextColor="#2E4E3F" />
+                <Label Text="Kuvaus" Grid.Row="0" Grid.Column="1"
+                       FontAttributes="Bold" TextColor="#2E4E3F" />
+                <Label Text="Toiminnot" Grid.Row="0" Grid.Column="2"
+                       FontAttributes="Bold" TextColor="#2E4E3F" />
+
+
+
+                <Button Text="Muokkaa" Grid.Row="1" Grid.Column="2" Clicked="OnEditClicked" />
+            </Grid>
+
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>
