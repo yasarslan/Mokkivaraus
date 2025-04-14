@@ -5,6 +5,7 @@ namespace Mokkivaraus.Views;
 public partial class LoginPage : ContentPage
 {
     DatabaseHelper dbHelper = new DatabaseHelper();
+    //en saa yhdistää tietokantaan..
 
     public LoginPage()
     {
