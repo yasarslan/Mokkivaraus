@@ -54,14 +54,14 @@ public partial class Asiakkaat : ContentPage
     
 
     
-    private async void LoadAsiakas()  // Async method to load cabins and add them to the mokkiLista collection
+    private async void LoadAsiakas()  // Load and add customers to collection
     {
-        var asiakasFromDb = await GetAsiakasAsync(); // Fetch cabins asynchronously
-        if (asiakasFromDb != null) // If cabins were fetched successfully
+        var asiakasFromDb = await GetAsiakasAsync(); // Fetch customers
+        if (asiakasFromDb != null) // 
         {
             foreach (var asiakas in asiakasFromDb)
             {
-                AsiakasLista.Add(asiakas); // Add each cabin to the list
+                AsiakasLista.Add(asiakas); // Add each customer to the list
             }
         }
     }
