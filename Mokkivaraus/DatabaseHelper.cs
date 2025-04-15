@@ -10,7 +10,7 @@ namespace Mokkivaraus
 {
     public class DatabaseHelper
     {
-        private readonly string connectionString = "server=;port=;database=vn;user=;password=";
+        private readonly string connectionString = "server=127.0.0.1;port=3306;database=vn;user=root;password=12345";
             public async Task<DataTable> GetDataAsync(string query)
             {
                         DataTable dt = new DataTable();
