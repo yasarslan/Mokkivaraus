@@ -198,17 +198,15 @@
                HorizontalOptions="Center"
                VerticalOptions="Center">
 
-                    <VerticalStackLayout Spacing="10">
+                    <VerticalStackLayout Spacing="20">
                         <Label Text="Lisää uusi mökki"
                        FontSize="20"
                        FontAttributes="Bold"
                        TextColor="#2E5632"
                        HorizontalOptions="Center" />
-                        
-                        <Entry x:Name="AlueEntry" Placeholder="Alue" TextColor="#2E5632" />
-                        <Entry x:Name="PostinroEntry" Placeholder="Posti numero" TextColor="#2E5632" />
-                        <Entry x:Name="NimiEntry" Placeholder="Mökin nimi" TextColor="#2E5632" />                        
-                        <Entry x:Name="SijaintiEntry" Placeholder="Katuosoite" TextColor="#2E5632"/>                        
+
+                        <Entry x:Name="NimiEntry" Placeholder="Mökin nimi" TextColor="#2E5632" />
+                        <Entry x:Name="SijaintiEntry" Placeholder="Sijainti" TextColor="#2E5632"/>
                         <Entry x:Name="HintaEntry" Placeholder="Hinta (€)" Keyboard="Numeric" TextColor="#2E5632" />
                         <Entry x:Name="KuvausEntry" Placeholder="Kuvaus" TextColor="#2E5632" />
                         <Entry x:Name="KapasiteettiEntry" Placeholder="Henkilömäärä" Keyboard="Numeric" TextColor="#2E5632"/>
