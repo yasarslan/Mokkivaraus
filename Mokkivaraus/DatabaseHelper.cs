@@ -10,7 +10,7 @@ namespace Mokkivaraus
 {
     public class DatabaseHelper
     {
-        public readonly string connectionString = "Server=127.0.0.1;port=3306;database=vn;username=root;";
+        private readonly string connectionString = "server=localhost;database=vn;user=root;";
             public async Task<DataTable> GetDataAsync(string query)
             {
                         DataTable dt = new DataTable();
@@ -35,6 +35,34 @@ namespace Mokkivaraus
                         }
                         return dt;
 
+            }
+
+            public async Task<int> ExecuteNonQueryAsync(string query, Dictionary<string, object> parameters)
+            {
+                int affectedRows = 0;
+                try
+                {
+                    using (MySqlConnection conn = new MySqlConnection(connectionString))
+                    {
+                        await conn.OpenAsync();
+                        using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                        {
+                            if (parameters != null)
+                            {
+                                foreach (var param in parameters)
+                                {
+                                    cmd.Parameters.AddWithValue(param.Key, param.Value);
+                                }
+                            }
+                            affectedRows = await cmd.ExecuteNonQueryAsync();
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Database Error: " + ex.Message);
+                }
+                return affectedRows;
             }
     }
 }

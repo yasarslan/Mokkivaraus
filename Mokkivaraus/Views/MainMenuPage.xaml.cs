@@ -44,7 +44,6 @@ public partial class MainMenuPage : ContentPage
     private async void OnAlueetClicked(object sender, EventArgs e)
     {
         // TODO: Navigoi Alueet-sivulle
-        await Navigation.PushAsync(new AlueetPage());
     }
 
     private void OnPalvelutClicked(object sender, EventArgs e)
@@ -59,7 +58,7 @@ public partial class MainMenuPage : ContentPage
 
     private async void OnAsiakkaatClicked(object sender, EventArgs e)
     {
-        // TODO: Navigoi Asiakkaat-sivulle
+        //Navigoi Asiakkaat-sivulle
         await Navigation.PushAsync(new Views.Asiakkaat());
     }
 
@@ -82,5 +81,5 @@ public partial class MainMenuPage : ContentPage
         Navigation.RemovePage(this);
     }
 
-
+    
 }
