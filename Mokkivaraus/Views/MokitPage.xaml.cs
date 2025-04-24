@@ -68,9 +68,9 @@ public partial class MokitPage : ContentPage
         await Navigation.PushAsync(new MokitPage());
     }
 
-    private void OnAlueetClicked(object sender, EventArgs e)
+    private async void OnAlueetClicked(object sender, EventArgs e)
     {
-        // TODO: Navigoi Alueet-sivulle
+        await Navigation.PushAsync(new AlueetPage());
     }
 
     private void OnPalvelutClicked(object sender, EventArgs e)
@@ -83,9 +83,10 @@ public partial class MokitPage : ContentPage
         // TODO: Navigoi Varaukset-sivulle
     }
 
-    private void OnAsiakkaatClicked(object sender, EventArgs e)
+    private async void OnAsiakkaatClicked(object sender, EventArgs e)
     {
-        // TODO: Navigoi Asiakkaat-sivulle
+        //Navigoi Asiakkaat-sivulle
+        await Navigation.PushAsync(new Views.Asiakkaat());
     }
 
     private void OnLaskutClicked(object sender, EventArgs e)
@@ -120,26 +121,77 @@ public partial class MokitPage : ContentPage
         PopupOverlay.IsVisible = false;
     }
 
-    private void OnSaveCabinClicked(object sender, EventArgs e)
+    private async void OnSaveCabinClicked(object sender, EventArgs e)
     {
         var yeniMokki = new Mokki
         {
+            Alue = AlueEntry.Text,
+            Postinumero = PostinroEntry.Text,
             MokkiNimi = NimiEntry.Text,
             Katuosoite = SijaintiEntry.Text,
             Hinta = decimal.TryParse(HintaEntry.Text, out decimal hinta) ? hinta : 0,
+            Kuvaus = KuvausEntry.Text,
             Henkilomaara = int.TryParse(KapasiteettiEntry.Text, out int kapasiteetti) ? kapasiteetti : 0,
-            Alue = AlueEntry.Text
+            Varustelu = VarusteluEntry.Text
         };
 
-        mokkiLista.Add(yeniMokki);
-        PopupOverlay.IsVisible = false;
+        bool success = await InsertCabinToDatabase(yeniMokki);
 
-        
-        NimiEntry.Text = "";
-        SijaintiEntry.Text = "";
-        HintaEntry.Text = "";
-        KapasiteettiEntry.Text = "";
-        AlueEntry.Text = "";
+        if (success)
+        {
+            mokkiLista.Add(yeniMokki);
+            await DisplayAlert("Onnistui", "Mökki lisätty onnistuneesti!", "OK");
+
+            // Clear fields
+            NimiEntry.Text = "";
+            SijaintiEntry.Text = "";
+            HintaEntry.Text = "";
+            KapasiteettiEntry.Text = "";
+            AlueEntry.Text = "";
+            VarusteluEntry.Text = "";
+            PostinroEntry.Text = "";
+            KuvausEntry.Text = "";
+
+            PopupOverlay.IsVisible = false;
+        }
+
+        else 
+        {
+            await DisplayAlert("Virhe", "Mökin lisääminen epäonnistui.", "OK");
+        }
+
+           
+    }
+
+    private async Task<bool> InsertCabinToDatabase(Mokki mokki)
+    {
+        const string insertQuery = @"
+        INSERT INTO mokki (alue_id, postinro, mokkinimi, katuosoite, hinta, kuvaus, henkilomaara, varustelu)
+        VALUES (@alue_id, @postinro, @mokkinimi, @katuosoite, @hinta, @kuvaus, @henkilomaara, @varustelu)";
+
+        var parameters = new Dictionary<string, object>
+    {
+        {"@mokkinimi", mokki.MokkiNimi!},
+        {"@alue_id", mokki.Alue!},
+        {"@hinta", mokki.Hinta},
+        {"@henkilomaara", mokki.Henkilomaara},
+        {"@katuosoite", mokki.Katuosoite!},
+        {"@varustelu", mokki.Varustelu!},
+        {"@postinro", mokki.Postinumero!},
+        {"@kuvaus", mokki.Kuvaus!}
+    };
+
+        DatabaseHelper dbHelper = new DatabaseHelper();
+        try
+        {
+            int result = await dbHelper.ExecuteNonQueryAsync(insertQuery, parameters);
+            return result > 0;
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine("Virhe lisättäessä mökkiä tietokantaan: " + ex.Message);
+            return false;
+        }
     }
 
     private void OnCancelPopupClicked(object sender, EventArgs e)

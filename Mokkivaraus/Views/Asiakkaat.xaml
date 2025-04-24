@@ -28,7 +28,7 @@
                 Margin="0,0.5,0,0.5"/>
 
             <!-- Sidebar -->
-            <Border Stroke="white" StrokeThickness="1" StrokeShape="Rectangle">
+           
                 <Grid Style="{StaticResource SidebarButtonStyle}">
                     <Grid.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnMokitClicked"/>
@@ -38,7 +38,7 @@
                         <Label Text="Mökit" TextColor="White" FontSize="16"/>
                     </HorizontalStackLayout>
                 </Grid>
-            </Border>
+            
 
             <Grid Style="{StaticResource SidebarButtonStyle}">
                 <Grid.GestureRecognizers>
@@ -70,7 +70,8 @@
                 </HorizontalStackLayout>
             </Grid>
 
-            <Grid Style="{StaticResource SidebarButtonStyle}">
+            <Border Stroke="white" StrokeThickness="1" StrokeShape="Rectangle">
+                <Grid Style="{StaticResource SidebarButtonStyle}">
                 <Grid.GestureRecognizers>
                     <TapGestureRecognizer Tapped="OnAsiakkaatClicked"/>
                 </Grid.GestureRecognizers>
@@ -79,6 +80,7 @@
                     <Label Text="Asiakkaat" TextColor="White" FontSize="16"/>
                 </HorizontalStackLayout>
             </Grid>
+            </Border>
 
             <Grid Style="{StaticResource SidebarButtonStyle}">
                 <Grid.GestureRecognizers>

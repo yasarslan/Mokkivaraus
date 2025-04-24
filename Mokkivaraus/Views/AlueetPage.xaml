@@ -1,71 +1,217 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Mokkivaraus.Views.AlueetPage"
-             BackgroundImageSource="forest_background.jpg"
-             Title="Alueet">
+             BackgroundImageSource="forest.png"
+             Title="">
 
-    <Grid Padding="30">
-        <VerticalStackLayout>
+    <Grid ColumnDefinitions="220,*">
 
-            <Label Text="Alueiden hallinta"
-                   FontSize="22"
-                   FontAttributes="Bold"
-                   TextColor="#2E4E3F"
-                   Margin="0,10"
-                   HorizontalOptions="Start"/>
+        <!-- Sivupalkki -->
+        <VerticalStackLayout BackgroundColor="#2E5632" Padding="20" Spacing="25" WidthRequest="220">
 
-            <HorizontalStackLayout Spacing="20"
-                                   Margin="0,10">
-                <Frame BackgroundColor="White"
-                       Padding="15"
-                       CornerRadius="10"
-                       WidthRequest="140"
-                       HeightRequest="80"
-                       VerticalOptions="Center">
-                    <VerticalStackLayout>
-                        <Label Text="Alueita yhteensä" FontSize="13" TextColor="Gray"/>
-                        <Label Text="6" FontSize="24" FontAttributes="Bold" TextColor="#2E4E3F"/>
-                    </VerticalStackLayout>
-                </Frame>
-
-                <Button Text="+ Lisää alue"
-                        BackgroundColor="#CDAF92"
-                        TextColor="White"
-                        CornerRadius="8"
-                        VerticalOptions="Center"
-                        Clicked="OnAddRegionClicked"/>
+            <!-- Logo ja otsikko -->
+            <HorizontalStackLayout Spacing="10" VerticalOptions="Start">
+                <Image Source="puulogo.png" WidthRequest="24" HeightRequest="24"/>
+                <Label Text="Mökkivaraus" TextColor="White" FontSize="18" FontAttributes="Bold"/>
             </HorizontalStackLayout>
 
-            <SearchBar Placeholder="Hae aluetta nimen perusteella"
-                       PlaceholderColor="Gray"
-                       TextColor="Black"
-                       SearchButtonPressed="OnSearchRegion"/>
+            <!-- logo ja sidebar välillä viiva -->
+            <BoxView 
+            HeightRequest="1" 
+            Color="#80FFFFFF" 
+            HorizontalOptions="Fill"
+            Margin="0,0.5,0,0.5"/>
 
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
+            <!-- Sidebar -->
+            
+                <Grid Style="{StaticResource SidebarButtonStyle}">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnMokitClicked"/>
+                    </Grid.GestureRecognizers>
+                    <HorizontalStackLayout Spacing="10">
+                        <Image Source="mokit.png" WidthRequest="24" HeightRequest="24"/>
+                        <Label Text="Mökit" TextColor="White" FontSize="16"/>
+                    </HorizontalStackLayout>
+                </Grid>
+            
 
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
+            <Border Stroke="white" StrokeThickness="1" StrokeShape="Rectangle">
+                <Grid Style="{StaticResource SidebarButtonStyle}">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnAlueetClicked"/>
+                </Grid.GestureRecognizers>
+                <HorizontalStackLayout Spacing="10">
+                    <Image Source="alueetlogo.png" WidthRequest="24" HeightRequest="24"/>
+                    <Label Text="Alueet" TextColor="White" FontSize="16"/>
+                </HorizontalStackLayout>
+            </Grid>
+            </Border>
 
-                <!-- Taulukon otsikko -->
-                <Label Text="Alueen nimi" Grid.Row="0" Grid.Column="0"
-                       FontAttributes="Bold" TextColor="#2E4E3F" />
-                <Label Text="Kuvaus" Grid.Row="0" Grid.Column="1"
-                       FontAttributes="Bold" TextColor="#2E4E3F" />
-                <Label Text="Toiminnot" Grid.Row="0" Grid.Column="2"
-                       FontAttributes="Bold" TextColor="#2E4E3F" />
+            <Grid Style="{StaticResource SidebarButtonStyle}">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnPalvelutClicked"/>
+                </Grid.GestureRecognizers>
+                <HorizontalStackLayout Spacing="10">
+                    <Image Source="palvelutlogo.png" WidthRequest="24" HeightRequest="24"/>
+                    <Label Text="Palvelut" TextColor="White" FontSize="16"/>
+                </HorizontalStackLayout>
+            </Grid>
 
+            <Grid Style="{StaticResource SidebarButtonStyle}">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnVarauksetClicked"/>
+                </Grid.GestureRecognizers>
+                <HorizontalStackLayout Spacing="10">
+                    <Image Source="varaukset.png" WidthRequest="24" HeightRequest="24"/>
+                    <Label Text="Varaukset" TextColor="White" FontSize="16"/>
+                </HorizontalStackLayout>
+            </Grid>
 
+            <Grid Style="{StaticResource SidebarButtonStyle}">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnAsiakkaatClicked"/>
+                </Grid.GestureRecognizers>
+                <HorizontalStackLayout Spacing="10">
+                    <Image Source="asiakkaat.png" WidthRequest="24" HeightRequest="24"/>
+                    <Label Text="Asiakkaat" TextColor="White" FontSize="16"/>
+                </HorizontalStackLayout>
+            </Grid>
 
-                <Button Text="Muokkaa" Grid.Row="1" Grid.Column="2" Clicked="OnEditClicked" />
+            <Grid Style="{StaticResource SidebarButtonStyle}">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnLaskutClicked"/>
+                </Grid.GestureRecognizers>
+                <HorizontalStackLayout Spacing="10">
+                    <Image Source="laskutlogo.png" WidthRequest="24" HeightRequest="24"/>
+                    <Label Text="Laskut" TextColor="White" FontSize="16"/>
+                </HorizontalStackLayout>
+            </Grid>
+
+            <Grid Style="{StaticResource SidebarButtonStyle}">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnRaportitClicked"/>
+                </Grid.GestureRecognizers>
+                <HorizontalStackLayout Spacing="10">
+                    <Image Source="raporttilogo.png" WidthRequest="24" HeightRequest="24"/>
+                    <Label Text="Raportit" TextColor="White" FontSize="16"/>
+                </HorizontalStackLayout>
+            </Grid>
+
+            <!-- Väli ennen uloskirjautumista -->
+            <BoxView HeightRequest="15" BackgroundColor="Transparent" />
+
+            <!-- Kirjaudu ulos -->
+            <Grid Style="{StaticResource SidebarButtonStyle}" VerticalOptions="End">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnLogoutTapped"/>
+                </Grid.GestureRecognizers>
+                <HorizontalStackLayout Spacing="10">
+                    <Image Source="uloslogo.png" WidthRequest="24" HeightRequest="24"/>
+                    <Label Text="Kirjaudu ulos" TextColor="White" FontSize="13"/>
+                </HorizontalStackLayout>
             </Grid>
 
         </VerticalStackLayout>
+        
+        <ScrollView Grid.Column="1">
+            <VerticalStackLayout Padding="30" Spacing="25">
+
+                <!-- Otsikko -->
+                <Label Text="Alueiden hallinta"
+                       FontSize="28"
+                       FontAttributes="Bold"
+                       TextColor="#2E5632"
+                       HorizontalOptions="Start"/>
+
+                <!-- count + Buton -->
+                <HorizontalStackLayout Spacing="20">
+                    <Frame BackgroundColor="White"
+                           Padding="15"
+                           CornerRadius="10"
+                           WidthRequest="160"
+                           HeightRequest="80"
+                           VerticalOptions="Center">
+                        <VerticalStackLayout>
+                            <Label Text="Alueita yhteensä" FontSize="13" TextColor="Gray"/>
+                            <Label Text="6" FontSize="24" FontAttributes="Bold" TextColor="#2E4E3F"/>
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <Button Text="+ Lisää alue"
+                            BackgroundColor="#CDAF92"
+                            TextColor="White"
+                            CornerRadius="8"
+                            VerticalOptions="Center"
+                            Clicked="OnAddRegionClicked"/>
+                </HorizontalStackLayout>
+
+                <!-- etsiä box -->
+                <SearchBar Placeholder="Hae aluetta nimen perusteella"
+                           PlaceholderColor="Gray"
+                           TextColor="Black"
+                           SearchButtonPressed="OnSearchRegion"/>
+
+                <!-- List -->
+                <Frame BackgroundColor="White"
+                       CornerRadius="16"
+                       Padding="0">
+                    <Grid Padding="20"
+                          ColumnDefinitions="*,*,Auto"
+                          RowDefinitions="Auto,Auto">
+
+                        <!-- otsikot -->
+                        <Label Text="Alueen nimi" FontAttributes="Bold" TextColor="#2E4E3F" Grid.Column="0"/>
+                        <Label Text="Kuvaus" FontAttributes="Bold" TextColor="#2E4E3F" Grid.Column="1"/>
+                        <Label Text="Toiminnot" FontAttributes="Bold" TextColor="#2E4E3F" Grid.Column="2"/>
+
+                        <!-- esimerkiksi -->
+                        <Label Text="Saimaa" Grid.Row="1" Grid.Column="0"/>
+                        <Label Text="Itäsuomen järvialue" Grid.Row="1" Grid.Column="1"/>
+                        <Button Text="Muokkaa"
+                                Grid.Row="1" Grid.Column="2"
+                                BackgroundColor="#D8B98F"
+                                TextColor="Black"
+                                Clicked="OnEditClicked"/>
+                    </Grid>
+                </Frame>
+
+            </VerticalStackLayout>
+        </ScrollView>
     </Grid>
+
+
+
+
+
+
+
+
+    <!-- hover css style -->
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="SidebarButtonStyle" TargetType="Grid">
+                <Setter Property="HeightRequest" Value="40"/>
+                <Setter Property="Padding" Value="10"/>
+                <Setter Property="BackgroundColor" Value="Transparent"/>
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup Name="CommonStates">
+                            <VisualState Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="Transparent"/>
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState Name="PointerOver">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="#3A6B44"/>
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <!-- hover css style -->
 </ContentPage>

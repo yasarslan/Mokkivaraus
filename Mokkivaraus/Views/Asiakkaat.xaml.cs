@@ -74,9 +74,9 @@ public partial class Asiakkaat : ContentPage
         await Navigation.PushAsync(new MokitPage());
     }
 
-    private void OnAlueetClicked(object sender, EventArgs e)
+    private async void OnAlueetClicked(object sender, EventArgs e)
     {
-        // TODO: Navigoi Alueet-sivulle
+        await Navigation.PushAsync(new AlueetPage());
     }
 
     private void OnPalvelutClicked(object sender, EventArgs e)
@@ -89,9 +89,10 @@ public partial class Asiakkaat : ContentPage
         // TODO: Navigoi Varaukset-sivulle
     }
 
-    private void OnAsiakkaatClicked(object sender, EventArgs e)
+    private async void OnAsiakkaatClicked(object sender, EventArgs e)
     {
-        // TODO: Navigoi Asiakkaat-sivulle
+        //Navigoi Asiakkaat-sivulle
+        await Navigation.PushAsync(new Views.Asiakkaat());
     }
 
     private void OnLaskutClicked(object sender, EventArgs e)
