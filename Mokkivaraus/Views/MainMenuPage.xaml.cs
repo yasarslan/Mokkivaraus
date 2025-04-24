@@ -41,9 +41,10 @@ public partial class MainMenuPage : ContentPage
         await Navigation.PushAsync(new MokitPage());
     }
 
-    private void OnAlueetClicked(object sender, EventArgs e)
+    private async void OnAlueetClicked(object sender, EventArgs e)
     {
         // TODO: Navigoi Alueet-sivulle
+        await Navigation.PushAsync(new AlueetPage());
     }
 
     private void OnPalvelutClicked(object sender, EventArgs e)
