@@ -58,7 +58,7 @@ public partial class MainMenuPage : ContentPage
 
     private async void OnAsiakkaatClicked(object sender, EventArgs e)
     {
-        //Navigoi Asiakkaat-sivulle
+        // TODO: Navigoi Asiakkaat-sivulle
         await Navigation.PushAsync(new Views.Asiakkaat());
     }
 
