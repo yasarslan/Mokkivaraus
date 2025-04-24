@@ -43,7 +43,6 @@ public partial class MainMenuPage : ContentPage
 
     private async void OnAlueetClicked(object sender, EventArgs e)
     {
-        // TODO: Navigoi Alueet-sivulle
         await Navigation.PushAsync(new AlueetPage());
     }
 
