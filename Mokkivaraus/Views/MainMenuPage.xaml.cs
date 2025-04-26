@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using System.Threading.Tasks;
 
 namespace Mokkivaraus.Views;
 
@@ -51,9 +52,10 @@ public partial class MainMenuPage : ContentPage
         // TODO: Navigoi Palvelut-sivulle
     }
 
-    private void OnVarauksetClicked(object sender, EventArgs e)
+    private async void OnVarauksetClicked(object sender, EventArgs e)
     {
         // TODO: Navigoi Varaukset-sivulle
+        await Navigation.PushAsync(new Views.VarauksetViewPage());
     }
 
     private async void OnAsiakkaatClicked(object sender, EventArgs e)

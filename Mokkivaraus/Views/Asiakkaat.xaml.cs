@@ -10,9 +10,9 @@ public partial class Asiakkaat : ContentPage
     DatabaseHelper dbHelper = new DatabaseHelper();
     public async Task<ObservableCollection<Asiakas>> GetAsiakasAsync()
     {
-        const string GetAsiakasQuery = "SELECT a.etunimi,a.sukunimi,a.postinro,a.lahiosoite,a.email,a.puhelinnro,v.varaus_id FROM asiakas a JOIN varaus v on a.asiakas_id=v.asiakas_id";
+        const string GetAsiakasQuery = "SELECT a.etunimi,a.sukunimi,a.postinro,a.lahiosoite,a.email,a.puhelinnro,v.varaus_id FROM vn.asiakas a INNER JOIN vn.varaus v on a.asiakas_id=v.asiakas_id";
 
-        //var asiakkaat = new ObservableCollection<Asiakas>();
+        var customer = new ObservableCollection<Asiakas>();
 
         try
         {
@@ -23,24 +23,24 @@ public partial class Asiakkaat : ContentPage
                 {
                     var asiakas = new Asiakas
                     {
-                        etunimi = row["a.etunimi"].ToString(),
-                        sukunimi = row["a.sukunimi"].ToString(),
-                        postiNo = row["a.postinro"].ToString(),
-                        lahiOsoite = row["a.lahiosoite"].ToString(),
-                        email = row["a.email"].ToString(),
-                        puhelin = row["a.puhekinnro"].ToString(),
-                        varausID = Convert.ToInt32(row["v.varaus_id"])
+                        etunimi = row["etunimi"].ToString(),
+                        sukunimi = row["sukunimi"].ToString(),
+                        postiNo = row["postinro"].ToString(),
+                        lahiOsoite = row["lahiosoite"].ToString(),
+                        email = row["email"].ToString(),
+                        puhelin = row["puhelinnro"].ToString(),
+                        varausID = Convert.ToInt32(row["varaus_id"])
                     };
-                    AsiakasLista.Add(asiakas);
+                    customer.Add(asiakas);
                 }
             }
         }
         catch (Exception ex)
         {
-            Debug.WriteLine($"Virhe haettaessa asiakkaita: {ex.Message}");
+            Console.WriteLine($"Virhe haettaessa asiakkaita: {ex.Message}");
             return new ObservableCollection<Asiakas>(); // Return an empty collection to avoid null issues
         }
-        return AsiakasLista;
+        return customer;
     }
 
 

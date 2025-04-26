@@ -130,8 +130,8 @@
                 <!--Asiakkaiden header -->
                 <CollectionView x:Name="AsiakasListaView">
                     <CollectionView.Header>
-                        <Frame CornerRadius="5" BackgroundColor="White">
-                            <Grid ColumnDefinitions="*,*,*,*,*,*,*">
+                        <Frame CornerRadius="5" BackgroundColor="White" Margin="5">
+                            <Grid ColumnDefinitions="*,*,*,*,*,*,*" ColumnSpacing="10">
                                 <Label Text="Etunimi" FontAttributes="Bold" TextColor="#2E5632" />
                                 <Label Text="Sukunimi" FontAttributes="Bold" TextColor="#2E5632" Grid.Column="1" />
                                 <Label Text="PostiNo." FontAttributes="Bold" TextColor="#2E5632" Grid.Column="2" />
@@ -149,14 +149,14 @@
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <Frame CornerRadius="5" BackgroundColor="White">
-                                <Grid ColumnDefinitions="*,*,*,*,*,*,*">
-                                    <Label Text="{Binding etunimi}" FontAttributes="Bold" TextColor="#2E5632" />
-                                    <Label Text="{Binding sukunimi}" FontAttributes="Bold" TextColor="#2E5632" Grid.Column="1" />
-                                    <Label Text="{Binding postiNo}" FontAttributes="Bold" TextColor="#2E5632" Grid.Column="2" />
-                                    <Label Text="{Binding lahiOsoite}" FontAttributes="Bold" TextColor="#2E5632" Grid.Column="3" />
-                                    <Label Text="{Binding email}" FontAttributes="Bold" TextColor="#2E5632" Grid.Column="4" />
-                                    <Label Text="{Binding puhelin}" FontAttributes="Bold" TextColor="#2E5632" Grid.Column="5" />
-                                    <Label Text="{Binding varausID}" FontAttributes="Bold" TextColor="#2E5632" Grid.Column="6" />
+                                <Grid ColumnDefinitions="*,*,*,*,100,*,*" ColumnSpacing="10">
+                                    <Label Text="{Binding etunimi}" TextColor="#2E5632" />
+                                    <Label Text="{Binding sukunimi}" TextColor="#2E5632" Grid.Column="1" />
+                                    <Label Text="{Binding postiNo}" TextColor="#2E5632" Grid.Column="2" />
+                                    <Label Text="{Binding lahiOsoite}" TextColor="#2E5632" Grid.Column="3" />
+                                    <Label Text="{Binding email}" TextColor="#2E5632" Grid.Column="4" />
+                                    <Label Text="{Binding puhelin}" TextColor="#2E5632" Grid.Column="5" />
+                                    <Label Text="{Binding varausID}" TextColor="#2E5632" Grid.Column="6" />
                                 </Grid>
                             </Frame>
                         </DataTemplate>

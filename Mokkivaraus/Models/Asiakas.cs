@@ -15,5 +15,7 @@ namespace Mokkivaraus.Models
         public string? email {  get; set; }
         public string? puhelin {  get; set; }
         public int varausID {  get; set; }
+
+        public string kokonaisNimi=>$"{etunimi} {sukunimi}";
     }
 }
