@@ -12,7 +12,11 @@
             <!-- Logo ja otsikko -->
             <HorizontalStackLayout Spacing="10" VerticalOptions="Start">
                 <Image Source="puulogo.png" WidthRequest="24" HeightRequest="24"/>
-                <Label Text="Mökkivaraus" TextColor="White" FontSize="18" FontAttributes="Bold"/>
+                <Label Text="Mökkivaraus" TextColor="White" FontSize="18" FontAttributes="Bold">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnMainMenuTapped" />
+                    </Label.GestureRecognizers>
+                </Label>
             </HorizontalStackLayout>
 
             <!-- logo ja sidebar välillä viiva -->
@@ -113,7 +117,7 @@
 
         <!-- Oikea puoli / Main Content -->
         <ScrollView Grid.Column="1">
-            <VerticalStackLayout Padding="30,40,30,30" Spacing="30">
+            <VerticalStackLayout Padding="30" Spacing="25">
 
                 <!-- otsikko -->
                 <Label Text="Mökkien hallinta" FontSize="28" FontAttributes="Bold" TextColor="#2E5632" />
@@ -137,7 +141,7 @@
 
                 <!-- lisää ja etsiä alue -->
                 <HorizontalStackLayout Spacing="15" VerticalOptions="Center">
-                    <Button Text="+ Lisää mökki" Clicked="OnAddCabinClicked" BackgroundColor="#D8B98F" TextColor="Black" />
+                    <Button Text="+ Lisää Mökki" Clicked="OnAddCabinClicked" BackgroundColor="#D8B98F" TextColor="Black" />
                     <SearchBar x:Name="CabinSearchBar" Placeholder="Hae mökkiä nimen perusteella" WidthRequest="300" TextChanged="OnSearchTextChanged" />
                 </HorizontalStackLayout>
 

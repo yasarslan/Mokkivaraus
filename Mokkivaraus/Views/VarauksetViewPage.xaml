@@ -14,7 +14,11 @@
             <!-- Logo ja otsikko -->
             <HorizontalStackLayout Spacing="10" VerticalOptions="Start">
                 <Image Source="puulogo.png" WidthRequest="24" HeightRequest="24"/>
-                <Label Text="Mökkivaraus" TextColor="White" FontSize="18" FontAttributes="Bold"/>
+                <Label Text="Mökkivaraus" TextColor="White" FontSize="18" FontAttributes="Bold">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnMainMenuTapped" />
+                    </Label.GestureRecognizers>
+                </Label>
             </HorizontalStackLayout>
 
             <!-- logo ja sidebar välillä viiva -->
@@ -57,18 +61,20 @@
                 </HorizontalStackLayout>
             </Grid>
 
-            <Grid Style="{StaticResource SidebarButtonStyle}">
-                <Grid.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="OnVarauksetClicked"/>
-                </Grid.GestureRecognizers>
-                <HorizontalStackLayout Spacing="10">
-                    <Image Source="varaukset.png" WidthRequest="24" HeightRequest="24"/>
-                    <Label Text="Varaukset" TextColor="White" FontSize="16"/>
-                </HorizontalStackLayout>
-            </Grid>
-
-            
+            <Border Stroke="white" StrokeThickness="1" StrokeShape="Rectangle">
                 <Grid Style="{StaticResource SidebarButtonStyle}">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnVarauksetClicked"/>
+                    </Grid.GestureRecognizers>
+                    <HorizontalStackLayout Spacing="10">
+                        <Image Source="varaukset.png" WidthRequest="24" HeightRequest="24"/>
+                        <Label Text="Varaukset" TextColor="White" FontSize="16"/>
+                    </HorizontalStackLayout>
+                </Grid>
+            </Border>
+
+
+            <Grid Style="{StaticResource SidebarButtonStyle}">
                 <Grid.GestureRecognizers>
                     <TapGestureRecognizer Tapped="OnAsiakkaatClicked"/>
                 </Grid.GestureRecognizers>
@@ -117,14 +123,17 @@
 
         <!-- Oikea puoli / Main Content -->
         <ScrollView Grid.Column="1">
-            <VerticalStackLayout Padding="5,20,5,5" Spacing="30">
+            <VerticalStackLayout Padding="30" Spacing="25">
 
                 <!--Varauksien otsikko -->
                 <Label Text="Nykyset Varaukset" FontSize="28" FontAttributes="Bold" TextColor="#2E5632" />
 
                 <Grid ColumnDefinitions="*,*" ColumnSpacing="50">
-                    <Button x:Name="LisaaVarausButton" Text="Uusi Varaus +" FontAttributes="Bold" HorizontalOptions="Start"/>
-                    
+                    <Button x:Name="LisaaVarausButton" Text="+ Uusi Varaus" TextColor="Black" BackgroundColor="#D8B98F" HorizontalOptions="Start"/>
+                    <SearchBar x:Name="ReservationSearchBar"
+                             Placeholder="Hae varauksen nimen perusteella"
+                             WidthRequest="300"
+                             TextChanged="OnSearchReservation" />
                 </Grid>
 
                 

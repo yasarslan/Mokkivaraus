@@ -12,7 +12,11 @@
             <!-- Logo ja otsikko -->
             <HorizontalStackLayout Spacing="10" VerticalOptions="Start">
                 <Image Source="puulogo.png" WidthRequest="24" HeightRequest="24"/>
-                <Label Text="Mökkivaraus" TextColor="White" FontSize="18" FontAttributes="Bold"/>
+                <Label Text="Mökkivaraus" TextColor="White" FontSize="18" FontAttributes="Bold">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnMainMenuTapped" />
+                    </Label.GestureRecognizers>
+                </Label>
             </HorizontalStackLayout>
 
             <!-- logo ja sidebar välillä viiva -->
@@ -122,34 +126,19 @@
                        FontAttributes="Bold"
                        TextColor="#2E5632"
                        HorizontalOptions="Start"/>
-
-                <!-- count + Buton -->
-                <HorizontalStackLayout Spacing="20">
-                    <Frame BackgroundColor="White"
-                           Padding="15"
-                           CornerRadius="10"
-                           WidthRequest="160"
-                           HeightRequest="80"
-                           VerticalOptions="Center">
-                        <VerticalStackLayout>
-                            <Label Text="Alueita yhteensä" FontSize="13" TextColor="Gray"/>
-                            <Label Text="6" FontSize="24" FontAttributes="Bold" TextColor="#2E4E3F"/>
-                        </VerticalStackLayout>
-                    </Frame>
-
-                    <Button Text="+ Lisää alue"
-                            BackgroundColor="#CDAF92"
-                            TextColor="White"
-                            CornerRadius="8"
-                            VerticalOptions="Center"
-                            Clicked="OnAddRegionClicked"/>
+                
+                <!-- lisää ja etsiä alue -->
+                <HorizontalStackLayout Spacing="15" VerticalOptions="Center">
+                    <Button Text="+ Lisää Alue" 
+                            Clicked="OnAddRegionClicked"
+                            BackgroundColor="#D8B98F"
+                            TextColor="Black" />
+                    <SearchBar x:Name="RegionSearchBar"
+                               Placeholder="Hae aluetta nimen perusteella"
+                               WidthRequest="300"
+                               TextChanged="OnSearchRegion" />
                 </HorizontalStackLayout>
 
-                <!-- etsiä box -->
-                <SearchBar Placeholder="Hae aluetta nimen perusteella"
-                           PlaceholderColor="Gray"
-                           TextColor="Black"
-                           SearchButtonPressed="OnSearchRegion"/>
 
                 <!-- List -->
                 <Frame BackgroundColor="White"

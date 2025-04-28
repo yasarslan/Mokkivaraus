@@ -233,6 +233,17 @@ public partial class MokitPage : ContentPage
 
 
     //MENU - sidebar////////////////////
+    private async void OnMainMenuTapped(object sender, EventArgs e)
+    {
+        if (sender is Label label)
+        {
+                await label.TranslateTo(10, 0, 50);
+                await label.TranslateTo(-10, 0, 50);
+                await label.TranslateTo(5, 0, 50);
+                await label.TranslateTo(0, 0, 50);
+        }
+        await Navigation.PushAsync(new Views.MainMenuPage());
+    }
 
     private async void OnMokitClicked(object sender, EventArgs e)
     {

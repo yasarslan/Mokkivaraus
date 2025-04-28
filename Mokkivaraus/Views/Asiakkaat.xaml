@@ -17,7 +17,11 @@
             <!-- Logo ja otsikko -->
             <HorizontalStackLayout Spacing="10" VerticalOptions="Start">
                 <Image Source="puulogo.png" WidthRequest="24" HeightRequest="24"/>
-                <Label Text="Mökkivaraus" TextColor="White" FontSize="18" FontAttributes="Bold"/>
+                <Label Text="Mökkivaraus" TextColor="White" FontSize="18" FontAttributes="Bold">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnMainMenuTapped" />
+                    </Label.GestureRecognizers>
+                </Label>
             </HorizontalStackLayout>
 
             <!-- logo ja sidebar välillä viiva -->
@@ -120,12 +124,15 @@
 
         <!-- Oikea puoli / Main Content -->
         <ScrollView Grid.Column="1">
-            <VerticalStackLayout Padding="30,40,30,30" Spacing="30">
+            <VerticalStackLayout Padding="30" Spacing="25">
 
                 <!--Asiakkaiden otsikko -->
                 <Label Text="Asiakkaiden Tiedot" FontSize="28" FontAttributes="Bold" TextColor="#2E5632" />
 
-                <SearchBar Placeholder="Hae asiakas nimellä..." HorizontalOptions="End" TextColor="#2E5632" Opacity="5"/>
+                <SearchBar Placeholder="Hae asiakas nimellä..." HorizontalOptions="Start"
+                           TextColor="#2E5632"
+                           Opacity="5"
+                           WidthRequest="300"/>
 
                 <!--Asiakkaiden header -->
                 <CollectionView x:Name="AsiakasListaView">
