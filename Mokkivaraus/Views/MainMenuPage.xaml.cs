@@ -83,5 +83,8 @@ public partial class MainMenuPage : ContentPage
         Navigation.RemovePage(this);
     }
 
-    
+    private void OnVarauksetClicked(object sender, TappedEventArgs e)
+    {
+
+    }
 }

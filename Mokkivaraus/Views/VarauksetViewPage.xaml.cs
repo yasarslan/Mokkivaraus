@@ -87,9 +87,9 @@ public partial class VarauksetViewPage : ContentPage
         // TODO: Navigoi Palvelut-sivulle
     }
 
-    private void OnVarauksetClicked(object sender, EventArgs e)
+    private async void OnVarauksetClicked(object sender, EventArgs e)
     {
-        // TODO: Navigoi Varaukset-sivulle
+        await Navigation.PushAsync(new VarauksetViewPage());
     }
 
     private async void OnAsiakkaatClicked(object sender, EventArgs e)

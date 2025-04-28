@@ -10,7 +10,7 @@ namespace Mokkivaraus
 {
     public class DatabaseHelper
     {
-        private readonly string connectionString = "server=;database=vn;user=;password=";
+        private readonly string connectionString = "server=;port=;database=;user=;password=";
             public async Task<DataTable> GetDataAsync(string query)
             {
                         DataTable dt = new DataTable();
@@ -52,9 +52,18 @@ namespace Mokkivaraus
                                 foreach (var param in parameters)
                                 {
                                     cmd.Parameters.AddWithValue(param.Key, param.Value);
+
+                                   Console.WriteLine($"Parameter added: {param.Key} = {param.Value}");
                                 }
                             }
-                            affectedRows = await cmd.ExecuteNonQueryAsync();
+
+                        // Log the full query for debugging
+                        Console.WriteLine("Executing query: " + query);
+
+                        affectedRows = await cmd.ExecuteNonQueryAsync();
+
+                        // Log number of affected rows
+                        Console.WriteLine($"Rows affected: {affectedRows}");
                         }
                     }
                 }
@@ -64,5 +73,23 @@ namespace Mokkivaraus
                 }
                 return affectedRows;
             }
+
+        public async Task<object> ExecuteScalarAsync(string query, Dictionary<string, object> parameters)
+        {
+            using (var connection = new MySqlConnection(connectionString))
+            {
+                await connection.OpenAsync();
+                using (var command = new MySqlCommand(query, connection))
+                {
+                    foreach (var param in parameters)
+                    {
+                        command.Parameters.AddWithValue(param.Key, param.Value);
+                    }
+
+                    var result = await command.ExecuteScalarAsync();
+                    return result;
+                }
+            }
+        }
     }
 }

@@ -67,7 +67,7 @@
                 </HorizontalStackLayout>
             </Grid>
 
-            <Border Stroke="white" StrokeThickness="1" StrokeShape="Rectangle">
+            
                 <Grid Style="{StaticResource SidebarButtonStyle}">
                 <Grid.GestureRecognizers>
                     <TapGestureRecognizer Tapped="OnAsiakkaatClicked"/>
@@ -77,7 +77,7 @@
                     <Label Text="Asiakkaat" TextColor="White" FontSize="16"/>
                 </HorizontalStackLayout>
             </Grid>
-            </Border>
+            
 
             <Grid Style="{StaticResource SidebarButtonStyle}">
                 <Grid.GestureRecognizers>

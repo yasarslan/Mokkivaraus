@@ -19,6 +19,7 @@ namespace Mokkivaraus
         public string? Kuvaus { get; set; }
         public int Henkilomaara { get; set; }
         public string? Alue { get; set; }
+        public int AlueID { get; set; }
         public string? Varustelu { get; set; } = "Vapaa"; // default "Vapaa"
     }
 
