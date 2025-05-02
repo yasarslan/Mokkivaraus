@@ -1,10 +1,8 @@
-using System.Threading.Tasks;
-
 namespace Mokkivaraus.Views;
 
-public partial class PalvelutPage : ContentPage
+public partial class LaskutPage : ContentPage
 {
-	public PalvelutPage()
+	public LaskutPage()
 	{
 		InitializeComponent();
 	}
@@ -56,6 +54,7 @@ public partial class PalvelutPage : ContentPage
     private async void OnRaportitClicked(object sender, EventArgs e)
     {
         await Navigation.PushAsync(new Views.RaportitPage());
+
     }
 
     private async void OnLogoutTapped(object sender, EventArgs e)
@@ -69,13 +68,4 @@ public partial class PalvelutPage : ContentPage
 
     ////////
     ///
-    private async void OnAddPalvelutClicked(object sender, EventArgs e)
-    {
-
-    }
-
-    private void OnSearchRegion(object sender, EventArgs e)
-    {
-
-    }
 }

@@ -272,14 +272,15 @@ public partial class MokitPage : ContentPage
         await Navigation.PushAsync(new Views.Asiakkaat());
     }
 
-    private void OnLaskutClicked(object sender, EventArgs e)
+    private async void OnLaskutClicked(object sender, EventArgs e)
     {
-        // TODO: Navigoi Laskut-sivulle
+        await Navigation.PushAsync(new Views.LaskutPage());
     }
 
-    private void OnRaportitClicked(object sender, EventArgs e)
+    private async void OnRaportitClicked(object sender, EventArgs e)
     {
-        // TODO: Navigoi Raportit-sivulle
+        await Navigation.PushAsync(new Views.RaportitPage());
+
     }
 
     private async void OnLogoutTapped(object sender, EventArgs e)

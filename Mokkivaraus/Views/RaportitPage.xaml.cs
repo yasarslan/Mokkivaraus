@@ -2,9 +2,9 @@ using System.Threading.Tasks;
 
 namespace Mokkivaraus.Views;
 
-public partial class PalvelutPage : ContentPage
+public partial class RaportitPage : ContentPage
 {
-	public PalvelutPage()
+	public RaportitPage()
 	{
 		InitializeComponent();
 	}
@@ -69,13 +69,4 @@ public partial class PalvelutPage : ContentPage
 
     ////////
     ///
-    private async void OnAddPalvelutClicked(object sender, EventArgs e)
-    {
-
-    }
-
-    private void OnSearchRegion(object sender, EventArgs e)
-    {
-
-    }
 }
