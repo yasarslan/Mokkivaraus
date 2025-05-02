@@ -1,41 +1,26 @@
-﻿using System.Data;
 using System.Threading.Tasks;
 
 namespace Mokkivaraus.Views;
 
-public partial class MainMenuPage : ContentPage
+public partial class PalvelutPage : ContentPage
 {
-    DatabaseHelper dbHelper = new DatabaseHelper();
-    public MainMenuPage()
+	public PalvelutPage()
 	{
 		InitializeComponent();
-        LoadData();
-    }
-
-    private async void LoadData()
-    {
-        DataTable dt = await dbHelper.GetDataAsync("SELECT * FROM mokki");
-        foreach (DataRow row in dt.Rows)
-                {
-                    Console.WriteLine(row["mokkinimi"]); 
-        }
-    }
-
-
-    protected override  void OnAppearing()
-    {
-        base.OnAppearing();
-        NavigationPage.SetHasBackButton(this, false); // hide back button        
-    }
-
-
-
-
-
-
-
+	}
 
     //MENU - sidebar////////////////////
+    private async void OnMainMenuTapped(object sender, EventArgs e)
+    {
+        if (sender is Label label)
+        {
+            await label.TranslateTo(10, 0, 50);
+            await label.TranslateTo(-10, 0, 50);
+            await label.TranslateTo(5, 0, 50);
+            await label.TranslateTo(0, 0, 50);
+        }
+        await Navigation.PushAsync(new Views.MainMenuPage());
+    }
 
     private async void OnMokitClicked(object sender, EventArgs e)
     {
@@ -49,13 +34,12 @@ public partial class MainMenuPage : ContentPage
 
     private async void OnPalvelutClicked(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new PalvelutPage());
+        await Navigation.PushAsync(new Views.PalvelutPage());
     }
 
     private async void OnVarauksetClicked(object sender, EventArgs e)
     {
-        // TODO: Navigoi Varaukset-sivulle
-        await Navigation.PushAsync(new Views.VarauksetViewPage());
+        await Navigation.PushAsync(new VarauksetViewPage());
     }
 
     private async void OnAsiakkaatClicked(object sender, EventArgs e)
@@ -83,7 +67,14 @@ public partial class MainMenuPage : ContentPage
         Navigation.RemovePage(this);
     }
 
-    private void OnVarauksetClicked(object sender, TappedEventArgs e)
+    ////////
+    ///
+    private async void OnAddPalvelutClicked(object sender, EventArgs e)
+    {
+
+    }
+
+    private void OnSearchRegion(object sender, EventArgs e)
     {
 
     }

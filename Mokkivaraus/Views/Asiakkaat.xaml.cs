@@ -2,6 +2,7 @@ using MySql.Data.MySqlClient;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using Mokkivaraus.Models;
+using System.Threading.Tasks;
 namespace Mokkivaraus.Views;
 
 public partial class Asiakkaat : ContentPage
@@ -90,9 +91,9 @@ public partial class Asiakkaat : ContentPage
         await Navigation.PushAsync(new AlueetPage());
     }
 
-    private void OnPalvelutClicked(object sender, EventArgs e)
+    private async void OnPalvelutClicked(object sender, EventArgs e)
     {
-        // TODO: Navigoi Palvelut-sivulle
+        await Navigation.PushAsync(new PalvelutPage());
     }
 
     private async void OnVarauksetClicked(object sender, EventArgs e)
