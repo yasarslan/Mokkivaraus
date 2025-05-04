@@ -127,12 +127,14 @@
             <VerticalStackLayout Padding="30" Spacing="25">
 
                 <!--Asiakkaiden otsikko -->
+                <HorizontalStackLayout Spacing="15" VerticalOptions="Center">
                 <Label Text="Asiakkaiden Tiedot" FontSize="28" FontAttributes="Bold" TextColor="#2E5632" />
-
-                <SearchBar Placeholder="Hae asiakas nimellä..." HorizontalOptions="Start"
+                <Button Text="+ Lisää Asiakas" Clicked="OnAddCustomerClicked" BackgroundColor="#D8B98F" TextColor="Black" />
+                    <SearchBar x:Name="CustomerSearchBar" Placeholder="Hae asiakas nimellä..." TextChanged="OnSearchTextChanged" HorizontalOptions="Start"
                            TextColor="#2E5632"
                            Opacity="5"
                            WidthRequest="300"/>
+                </HorizontalStackLayout>
 
                 <!--Asiakkaiden header -->
                 <CollectionView x:Name="AsiakasListaView">

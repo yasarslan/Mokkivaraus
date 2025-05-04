@@ -1,9 +1,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Mokkivaraus.Views.AlueetPage"
-             BackgroundImageSource="forest.png"
-             Title="">
-
+             BackgroundImageSource="forest.png">
     <Grid ColumnDefinitions="220,*">
 
         <!-- Sivupalkki -->
@@ -140,41 +138,92 @@
                 </HorizontalStackLayout>
 
 
-                <!-- List -->
-                <Frame BackgroundColor="White"
-                       CornerRadius="16"
-                       Padding="0">
-                    <Grid Padding="20"
-                          ColumnDefinitions="*,*,Auto"
-                          RowDefinitions="Auto,Auto">
+                <CollectionView x:Name="AlueListaView">
+                    <CollectionView.Header>
+                        <Grid Padding="10,5" BackgroundColor="White" Margin="10" ColumnDefinitions="*, Auto">
+                            <Label Text="Alueen nimi" FontAttributes="Bold" TextColor="#2E5632" />
+                            <Label Text="" Grid.Column="2" />
+                        </Grid>
+                    </CollectionView.Header>
 
-                        <!-- otsikot -->
-                        <Label Text="Alueen nimi" FontAttributes="Bold" TextColor="#2E4E3F" Grid.Column="0"/>
-                        <Label Text="Kuvaus" FontAttributes="Bold" TextColor="#2E4E3F" Grid.Column="1"/>
-                        <Label Text="Toiminnot" FontAttributes="Bold" TextColor="#2E4E3F" Grid.Column="2"/>
-
-                        <!-- esimerkiksi -->
-                        <Label Text="Saimaa" Grid.Row="1" Grid.Column="0"/>
-                        <Label Text="Itäsuomen järvialue" Grid.Row="1" Grid.Column="1"/>
-                        <Button Text="Muokkaa"
-                                Grid.Row="1" Grid.Column="2"
-                                BackgroundColor="#D8B98F"
-                                TextColor="Black"
-                                Clicked="OnEditClicked"/>
-                    </Grid>
-                </Frame>
+                    <!--aluelist-->
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame BackgroundColor="White" Padding="10" Margin="0,5" CornerRadius="10">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnAlueRowTapped" CommandParameter="{Binding .}" />
+                                </Frame.GestureRecognizers>
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <Label Text="{Binding AlueNimi}" TextColor="#2E5632" />
+                                    <Button Text="Poista"
+                                     Grid.Column="2"
+                                     BackgroundColor="#9B1C1C"
+                                     TextColor="White"
+                                     WidthRequest="70"
+                                     Clicked="OnPoistaClicked"
+                                     CommandParameter="{Binding .}" />                  
+                                </Grid>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
 
             </VerticalStackLayout>
         </ScrollView>
-    </Grid>
 
 
+        <!--POPUP SIVU FOR ALUELIST-->
 
+        <Grid x:Name="PopupOverlay"
+                BackgroundColor="#80000000"
+                IsVisible="False"
+                VerticalOptions="FillAndExpand"
+                HorizontalOptions="FillAndExpand"
+                Padding="0"
+                Grid.ColumnSpan="2">
 
+            <Grid HorizontalOptions="Center" VerticalOptions="Center">
+                <Frame BackgroundColor="White"
+                         CornerRadius="20"
+                         Padding="30"
+                         WidthRequest="400"
+                         HasShadow="True"
+                         HorizontalOptions="Center"
+                         VerticalOptions="Center">  
 
+                    <VerticalStackLayout Spacing="10">
+                        <Label x:Name="PopupTitleLabel"
+                                 Text="Lisää uusi alue"
+                                 FontSize="20"
+                                 FontAttributes="Bold"
+                                 TextColor="#2E5632"
+                                 HorizontalOptions="Center" />  
 
+                        <Entry x:Name="AlueNimiEntry" Placeholder="Alueen Nimi" TextColor="#2E5632" />
 
+                        <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                            <Button Text="Tallenna"
+                                      BackgroundColor="#D8B98F"
+                                      TextColor="Black"
+                                      Clicked="OnSaveAlueClicked"
+                                      WidthRequest="100"/>
 
+                            <Button Text="Peruuta"
+                                      BackgroundColor="#CCCCCC"
+                                      TextColor="Black"
+                                      Clicked="OnCancelPopupClicked"
+                                      WidthRequest="100"/>  
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </Frame>
+            </Grid>            
+        </Grid>
+
+        <!--popupend-->
+
+    </Grid> 
+
+    
     <!-- hover css style -->
     <ContentPage.Resources>
         <ResourceDictionary>

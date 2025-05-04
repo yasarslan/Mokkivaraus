@@ -125,5 +125,24 @@ public partial class Asiakkaat : ContentPage
         Navigation.RemovePage(this);
     }
 
-    
+    private void OnAddCustomerClicked(object sender, EventArgs e)
+    {
+
+    }
+
+    private void OnSearchTextChanged(object sender, TextChangedEventArgs e) // Seach event handler to filter the customer list based on the search text
+    {
+        var searchText = CustomerSearchBar.Text?.ToLower() ?? string.Empty;
+        var filteredList = AsiakasLista.Where(a =>
+            (a.etunimi?.Contains(searchText, StringComparison.OrdinalIgnoreCase) ?? false) ||
+            (a.sukunimi?.Contains(searchText, StringComparison.OrdinalIgnoreCase) ?? false) ||
+            (a.postiNo?.Contains(searchText, StringComparison.OrdinalIgnoreCase) ?? false) ||
+            (a.lahiOsoite?.Contains(searchText, StringComparison.OrdinalIgnoreCase) ?? false) ||
+            (a.email?.Contains(searchText, StringComparison.OrdinalIgnoreCase) ?? false) ||
+            (a.puhelin?.Contains(searchText, StringComparison.OrdinalIgnoreCase) ?? false)
+            //a.varausID.ToString().Contains(searchText, StringComparison.OrdinalIgnoreCase)
+        ).ToList();
+
+        AsiakasListaView.ItemsSource = new ObservableCollection<Asiakas>(filteredList);
+    }
 }

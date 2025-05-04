@@ -12,7 +12,7 @@ public partial class VarauksetViewPage : ContentPage
     DatabaseHelper dbHelper = new DatabaseHelper();
     public async Task<ObservableCollection<Varaukset>> GetVarausAsync()
     {
-        const string GetVarausQuery = "select a.etunimi,a.sukunimi,a.puhelinnro,v.varattu_pvm,al.nimi,m.mokkinimi,p.nimi as palvelunimi,date(v.varattu_alkupvm) as alku,date(v.varattu_loppupvm)as loppu from vn.varaus v join vn.asiakas a on v.asiakas_id=a.asiakas_id join vn.mokki m on v.mokki_id=m.mokki_id join vn.alue al on v.mokki_id=al.alue_id join vn.palvelu p on al.alue_id=p.alue_id";
+        const string GetVarausQuery = "SELECT a.etunimi, a.sukunimi, a.puhelinnro, v.varattu_pvm, al.nimi, m.mokkinimi, p.nimi AS palvelunimi, DATE(v.varattu_alkupvm) AS alku, DATE(v.varattu_loppupvm) AS loppu FROM vn.varaus v JOIN vn.asiakas a ON v.asiakas_id = a.asiakas_id JOIN vn.mokki m ON v.mokki_id = m.mokki_id JOIN vn.alue al ON m.alue_id = al.alue_id LEFT JOIN vn.varauksen_palvelut vp ON vp.varaus_id = v.varaus_id LEFT JOIN vn.palvelu p ON p.palvelu_id = vp.palvelu_id;";
 
         var varaukset = new ObservableCollection<Varaukset>();
 
