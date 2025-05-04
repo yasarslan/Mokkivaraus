@@ -40,9 +40,9 @@ namespace Mokkivaraus.Views
             await Navigation.PushAsync(new AlueetPage());
         }
 
-        private void OnPalvelutClicked(object sender, EventArgs e)
+        private async void OnPalvelutClicked(object sender, EventArgs e)
         {
-            // TODO: Navigoi Palvelut-sivulle
+            await Navigation.PushAsync(new PalvelutPage());
         }
 
         private async void OnVarauksetClicked(object sender, EventArgs e)
@@ -56,14 +56,14 @@ namespace Mokkivaraus.Views
             await Navigation.PushAsync(new Views.Asiakkaat());
         }
 
-        private void OnLaskutClicked(object sender, EventArgs e)
+        private async void OnLaskutClicked(object sender, EventArgs e)
         {
-            // TODO: Navigoi Laskut-sivulle
+            await Navigation.PushAsync(new Views.LaskutPage());
         }
 
-        private void OnRaportitClicked(object sender, EventArgs e)
+        private async void OnRaportitClicked(object sender, EventArgs e)
         {
-            // TODO: Navigoi Raportit-sivulle
+            await Navigation.PushAsync(new Views.RaportitPage());
         }
 
         private async void OnLogoutTapped(object sender, EventArgs e)
