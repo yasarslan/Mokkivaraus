@@ -9,6 +9,15 @@ public partial class RaportitPage : ContentPage
 		InitializeComponent();
 	}
 
+
+
+    private void OnNaytaRaporttiClicked(object sender, EventArgs e)
+    {
+        // TODO
+    }
+  
+
+
     //MENU - sidebar////////////////////
     private async void OnMainMenuTapped(object sender, EventArgs e)
     {

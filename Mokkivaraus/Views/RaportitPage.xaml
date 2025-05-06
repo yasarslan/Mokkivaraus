@@ -108,7 +108,7 @@
             </Border>
 
             <!-- Väli ennen uloskirjautumista -->
-            <BoxView HeightRequest="15" BackgroundColor="Transparent" />
+            <BoxView HeightRequest="65" BackgroundColor="Transparent" />
 
             <!-- Kirjaudu ulos -->
             <Grid Style="{StaticResource SidebarButtonStyle}" VerticalOptions="End">
@@ -124,7 +124,7 @@
         </VerticalStackLayout>
 
         <ScrollView Grid.Column="1">
-            <VerticalStackLayout Padding="30" Spacing="25">
+            <VerticalStackLayout Padding="30" Spacing="25" >
 
                 <!-- Otsikko -->
                 <Label Text="Raportit"
@@ -133,9 +133,76 @@
                    TextColor="#2E5632"
                    HorizontalOptions="Start"/>
 
+                <Frame BackgroundColor="White"
+                       Padding="20"
+                       CornerRadius="12"
+                       HasShadow="True"
+                       Opacity="0.9">
+                    <VerticalStackLayout Spacing="15">
 
+                        <!-- Raporttityypin valinta -->
+                        <Label Text="Valitse raporttityyppi:" FontAttributes="Bold" TextColor="#2E5632"/>
+                        <Picker x:Name="RaporttiTyyppiPicker">
+                            <Picker.Items>
+                                <x:String>Majoittumiset valituilla alueilla</x:String>
+                                <x:String>Palvelut valituilla alueilla</x:String>
+                            </Picker.Items>
+                        </Picker>
 
+                        <!-- Aikaväli -->
+                        <Label Text="Valitse aikaväli:" FontAttributes="Bold" TextColor="#2E5632"/>
+                        <HorizontalStackLayout Spacing="15">
+                            <VerticalStackLayout>
+                                <Label Text="Alkupäivä" TextColor="#2E5632"/>
+                                <DatePicker x:Name="AloitusPaivaPicker"/>
+                            </VerticalStackLayout>
+                            <VerticalStackLayout>
+                                <Label Text="Loppupäivä" TextColor="#2E5632"/>
+                                <DatePicker x:Name="LoppuPaivaPicker"/>
+                            </VerticalStackLayout>
+                        </HorizontalStackLayout>
 
+                        <!-- Aluevalinta -->
+                        <Label Text="Valitse alue:" FontAttributes="Bold" TextColor="#2E5632"/>
+                        <Picker x:Name="AluePicker" Title="Valitse alue" />
+
+                        <!-- Raportin hakupainike -->
+                        <Button Text="Näytä raportti"
+                  BackgroundColor="#D8B98F"
+                    TextColor="Black"
+                              WidthRequest="300"
+                Clicked="OnNaytaRaporttiClicked" />
+
+                        <!-- Raportin näyttö -->
+                        <CollectionView x:Name="RaporttiCollectionView"
+                IsVisible="False"
+                Margin="0,20,0,0">
+                            <CollectionView.Header>
+                                <Grid BackgroundColor="White" Padding="10" ColumnDefinitions="*,*,*,*,*">
+                                    <Label Text="Alue" FontAttributes="Bold" TextColor="#2E5632"/>
+                                    <Label Text="Asiakas" FontAttributes="Bold" Grid.Column="1" TextColor="#2E5632"/>
+                                    <Label Text="Tuote/Palvelu" FontAttributes="Bold" Grid.Column="2" TextColor="#2E5632"/>
+                                    <Label Text="Päivämäärä" FontAttributes="Bold" Grid.Column="3" TextColor="#2E5632"/>
+                                    <Label Text="Hinta" FontAttributes="Bold" Grid.Column="4" TextColor="#2E5632"/>
+                                </Grid>
+                            </CollectionView.Header>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid BackgroundColor="White" Padding="10" ColumnDefinitions="*,*,*,*,*">
+                                        <Label Text="{Binding Alue}" />
+                                        <Label Text="{Binding Asiakas}" Grid.Column="1" />
+                                        <Label Text="{Binding Tuote}" Grid.Column="2" />
+                                        <Label Text="{Binding Paivamaara}" Grid.Column="3" />
+                                        <Label Text="{Binding Hinta}" Grid.Column="4" />
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+
+                        
+
+                    </VerticalStackLayout>
+                </Frame>
 
 
             </VerticalStackLayout>

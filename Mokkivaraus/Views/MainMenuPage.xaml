@@ -94,7 +94,7 @@
             </Grid>
 
             <!-- Väli ennen uloskirjautumista -->
-            <BoxView HeightRequest="10" BackgroundColor="Transparent" />
+            <BoxView HeightRequest="65" BackgroundColor="Transparent" />
 
             <!-- Kirjaudu ulos -->
             <Grid Style="{StaticResource SidebarButtonStyle}" VerticalOptions="End">
@@ -114,8 +114,8 @@
         <VerticalStackLayout Padding="30" Spacing="30" Grid.Column="1">
 
             <!-- Tervetulotoivotus -->
-            <!-- BACKEND: Tähän tuodaan sisäänkirjautuneen käyttäjän nimi -->
-            <Label Text="{Binding LoggedInUserName}" FontSize="24" FontAttributes="Bold" TextColor="#2E5632"/>
+            <Label Text="Tervetuloa!" FontSize="35" FontAttributes="Bold" TextColor="#2E5632" HorizontalOptions="Center" />
+            <Label Text="Mökkivaraus Järjestelmään" FontSize="22" FontAttributes="Bold" TextColor="#4E774C" HorizontalOptions="Center" />
 
             <!-- Yhteenveto-ruudut -->
             <HorizontalStackLayout Spacing="20">
@@ -138,8 +138,55 @@
             </HorizontalStackLayout>
 
             
+            
+            <!-- Laskut yhteenveto -->
+            
+            <HorizontalStackLayout Spacing="20">
+                <Frame BackgroundColor="White" CornerRadius="16" Padding="20" WidthRequest="150">
+                    <VerticalStackLayout>
+                        <Label Text="Laskuja yhteensä" FontSize="14" TextColor="Gray" />
+                        <Label Text="12" FontSize="24" FontAttributes="Bold" TextColor="#2E5632" />
+                    </VerticalStackLayout>
+                </Frame>
+                <Frame BackgroundColor="White" CornerRadius="16" Padding="20" WidthRequest="150">
+                    <VerticalStackLayout>
+                        <Label Text="Avoimet laskut" FontSize="14" TextColor="Gray" />
+                        <Label Text="5" FontSize="24" FontAttributes="Bold" TextColor="#2E5632" />
+                    </VerticalStackLayout>
+                </Frame>
+                <Frame BackgroundColor="White" CornerRadius="16" Padding="20" WidthRequest="150">
+                    <VerticalStackLayout>
+                        <Label Text="Maksetut laskut" FontSize="14" TextColor="Gray" />
+                        <Label Text="7" FontSize="24" FontAttributes="Bold" TextColor="#2E5632" />
+                    </VerticalStackLayout>
+                </Frame>
+            </HorizontalStackLayout>
+
+
+                <VerticalStackLayout Opacity="0.45"  Padding="1" Margin="115" Spacing="5" HorizontalOptions="Center" VerticalOptions="Center">
+                <Label  Text="Village Newbies Oy" FontSize="50" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center" Margin="0,0,0,0"/>
+                </VerticalStackLayout>
+                    
+
 
         </VerticalStackLayout>
+
+        <!-- Oikean alakulman yhteystiedot -->
+        <Frame BackgroundColor="#E8E8E8"
+                   BorderColor="#B0B0B0"
+                   CornerRadius="10"
+                   Padding="15"
+                   WidthRequest="200"
+                   HorizontalOptions="End"
+                   VerticalOptions="End"
+                   Margin="100,200,9,75"
+                    Opacity="0.55">
+            <VerticalStackLayout Spacing="5" HorizontalOptions="Center"  >
+                <Label Text="        Yhteistiedot" FontAttributes="Bold" TextColor="Black"/>
+                <Label Text=" info@mokkivaraus.fi" TextColor="Black"/>
+                <Label Text="   +358 40 123 4567" TextColor="Black"/>
+            </VerticalStackLayout>
+        </Frame>
     </Grid>
 
 

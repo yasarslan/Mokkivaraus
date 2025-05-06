@@ -108,7 +108,7 @@
             </Grid>
 
             <!-- Väli ennen uloskirjautumista -->
-            <BoxView HeightRequest="15" BackgroundColor="Transparent" />
+            <BoxView HeightRequest="65" BackgroundColor="Transparent" />
 
             <!-- Kirjaudu ulos -->
             <Grid Style="{StaticResource SidebarButtonStyle}" VerticalOptions="End">
@@ -127,28 +127,138 @@
             <VerticalStackLayout Padding="30" Spacing="25">
 
                 <!-- Otsikko -->
-                <Label Text="Laskut"
+                <Label Text="Laskujen hallinta"
                    FontSize="28"
                    FontAttributes="Bold"
                    TextColor="#2E5632"
                    HorizontalOptions="Start"/>
 
+                <HorizontalStackLayout Spacing="10">
+                    <Button Text="+ Luo lasku" BackgroundColor="#D8B98F"
+                            Clicked="OnAddLaskuClicked"
+                            TextColor="Black" />
+                    <SearchBar Placeholder="Hae laskua nimen tai numeron perusteella" WidthRequest="300" />
+                </HorizontalStackLayout>
+
+                <!-- Lasku Listaus -->
+                <CollectionView x:Name="LaskutCollectionView">
+                    <CollectionView.Header>
+                        <Grid Padding="10,5" BackgroundColor="White" Margin="10" ColumnDefinitions="*,*,*,*,*,*,Auto">
+                            <Label Text="Laskunro"  FontAttributes="Bold" TextColor="#2E5632" Grid.Column="0" />
+                            <Label Text="Asiakas" FontAttributes="Bold" TextColor="#2E5632" Grid.Column="1" />
+                            <Label Text="Summa" FontAttributes="Bold" TextColor="#2E5632" Grid.Column="2" />
+                            <Label Text="Tuote/Palvelu" FontAttributes="Bold" TextColor="#2E5632" Grid.Column="3" />
+                            <Label Text="Tila" FontAttributes="Bold" TextColor="#2E5632" Grid.Column="4" />
+                            <Label Text="Päivämäärä" FontAttributes="Bold" TextColor="#2E5632" Grid.Column="5" />
+                            <Label Text="" Grid.Column="6" />
+                        </Grid>
+                    </CollectionView.Header>
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame Margin="10,0,10,10" Padding="0" BackgroundColor="White" HasShadow="False" BorderColor="#EEEEEE" CornerRadius="8">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnLaskuRowTapped" CommandParameter="{Binding .}" />
+                                </Frame.GestureRecognizers>
+                                <Grid Padding="10,5" ColumnDefinitions="*,*,*,*,*,*,Auto">
+                                    <Label Text="{Binding LaskuNumero}" Grid.Column="0" />
+                                    <Label Text="{Binding Asiakas}" Grid.Column="1" />
+                                    <Label Text="{Binding Summa}" Grid.Column="2" />
+                                    <Label Text="{Binding Tuote}" Grid.Column="3" />
+                                    <Label Text="{Binding Tila}" Grid.Column="4" />
+                                    <Label Text="{Binding Paivamaara}" Grid.Column="5" />
+
+
+                                    
+                                </Grid>
+                                
+                                
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
 
 
 
-                
+
 
             </VerticalStackLayout>
         </ScrollView>
+    
+
+
+
+
+    <!-- Lasku Popup -->
+    <Grid x:Name="LaskuPopupOverlay"
+      BackgroundColor="#80000000"
+      IsVisible="False"
+      VerticalOptions="FillAndExpand"
+      HorizontalOptions="FillAndExpand"
+      Padding="0"
+      Grid.ColumnSpan="2">
+
+        <Grid HorizontalOptions="Center" VerticalOptions="Center">
+            <Frame BackgroundColor="White"
+               CornerRadius="20"
+               Padding="30"
+               WidthRequest="500"
+               HasShadow="True"
+               HorizontalOptions="Center"
+               VerticalOptions="Center">
+
+                <VerticalStackLayout Spacing="10">
+                    <Label x:Name="LaskuPopupTitle"
+                       Text="Lisää uusi lasku"
+                       FontSize="20"
+                       FontAttributes="Bold"
+                       TextColor="#2E5632"
+                       HorizontalOptions="Center" />
+
+                    <Entry x:Name="LaskuNumeroEntry" Placeholder="Laskun numero" />
+                    <Entry x:Name="AsiakasEntry" Placeholder="Asiakas" />
+                    <Entry x:Name="SummaEntry" Placeholder="Summa (€)" Keyboard="Numeric" />
+                    <Entry x:Name="TuoteEntry" Placeholder="Tuote/Palvelu" />
+                    <Entry x:Name="TilaEntry" Placeholder="Tila (Maksettu/Avoin)" />
+                    <Entry x:Name="PaivamaaraEntry" Placeholder="Päivämäärä (esim. 01.06.2025)" />
+
+                    <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                        <Button Text="Tallenna"
+                            BackgroundColor="#D8B98F"
+                            TextColor="Black"
+                            Clicked="OnSaveLaskuClicked"
+                            WidthRequest="100"/>
+
+                        <Button x:Name="PoistaLaskuButton"
+                            Text="Poista"
+                            BackgroundColor="#D8B98F"
+                            TextColor="Red"
+                            Clicked="OnPoistaLaskuClicked"
+                            WidthRequest="100"/>
+
+                        <Button Text="Peruuta"
+                            BackgroundColor="#CCCCCC"
+                            TextColor="Black"
+                            Clicked="OnCancelLaskuPopupClicked"
+                            WidthRequest="100"/>
+
+                            <!-- PDF -->
+                            <Button Text="PDF"
+                            BackgroundColor="#7C9A92"
+                            TextColor="White"
+                             Clicked="OnDownloadPdfClicked"
+                             WidthRequest="100"
+                               
+                            x:Name="PdfLaskuButton" />
+                        </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Frame>
+        </Grid>
     </Grid>
 
+    <!-- Lasku Popup -->
 
-
-
-
-
-
-
+    </Grid>
 
 
 
