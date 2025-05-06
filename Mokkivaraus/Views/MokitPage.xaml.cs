@@ -10,7 +10,7 @@ public partial class MokitPage : ContentPage
     private List<Alue> alueetLista = new List<Alue>(); // A list to hold the areas
     private ObservableCollection<Mokki> mokkiLista = new ObservableCollection<Mokki>(); // ObservableCollection to hold the list of cabins
     DatabaseHelper dbHelper = new DatabaseHelper(); // Instance of the DatabaseHelper class to manage database operations
-    private Mokki _editingCabin = null; // null means adding, not null means editing
+    private Mokki? _editingCabin = null; // null means adding, not null means editing
     private int totalCabins;
     private int availableCabins;
 

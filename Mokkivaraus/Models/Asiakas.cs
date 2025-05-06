@@ -8,6 +8,7 @@ namespace Mokkivaraus.Models
 {
     public class Asiakas
     {
+        public int asiakasID { get; set; }
         public string? etunimi { get; set; }
         public string? sukunimi { get; set; }
         public string? postiNo { get; set; }

@@ -7,7 +7,7 @@ namespace Mokkivaraus.Views
     {
         private ObservableCollection<Alue> alueetLista = new ObservableCollection<Alue>();
         DatabaseHelper dbHelper = new DatabaseHelper(); // Instance of the DatabaseHelper class to manage database operations
-        private Alue _editingAlue = null; // null means adding, not null means editing
+        private Alue? _editingAlue = null; // null means adding, not null means editing
 
         public AlueetPage()
         {
@@ -109,6 +109,7 @@ namespace Mokkivaraus.Views
         //Method to load areas and add them to the alueetLista collection
         private async void LoadAlueet()
         {
+            alueetLista.Clear(); // Clear the existing list
             var alueetFromDb = await GetAlueetAsync(); // Fetch areas
             if (alueetFromDb != null)
             {
@@ -175,20 +176,24 @@ namespace Mokkivaraus.Views
 
             if (_editingAlue != null) // If editing an existing area, update it in the database
             {
-                _editingAlue.AlueNimi = uusiAlue.AlueNimi;
+                var updatedAlue = new Alue
+                {
+                    AlueId = _editingAlue.AlueId,
+                    AlueNimi = alueNimi
+                };
 
-                bool successUpdate = await UpdateAlueInDatabase(_editingAlue); // Update the area in the database
+                bool successUpdate = await UpdateAlueInDatabase(updatedAlue); // Use updatedAlue for DB
 
                 if (successUpdate)
                 {
-                    var index = alueetLista.IndexOf(_editingAlue); // Find the index of the updated area and replace it in the list
+                    var index = alueetLista.IndexOf(_editingAlue);
                     if (index >= 0)
                     {
-                        alueetLista[index] = _editingAlue; // Replace the old area with the updated one
+                        alueetLista[index] = updatedAlue; // Replace with new instance to trigger UI update
                     }
 
                     await DisplayAlert("Onnistui", "Alue päivitetty onnistuneesti!", "OK");
-                    PopupOverlay.IsVisible = false; // Hide the popup
+                    PopupOverlay.IsVisible = false;
                 }
                 else
                 {
@@ -232,7 +237,7 @@ namespace Mokkivaraus.Views
 
             try
             {
-                object result = await dbHelper.ExecuteScalarAsync(insertQuery, parameters);  // Execute the query and get the new area ID
+                object? result = await dbHelper.ExecuteScalarAsync(insertQuery, parameters);  // Execute the query and get the new area ID
                 if (result != null && int.TryParse(result.ToString(), out int newId))
                 {
                     alue.AlueId = newId; // Assign the new ID to the area object

@@ -2,7 +2,6 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Mokkivaraus.Views.PalvelutPage"
-             Title=""
              BackgroundImageSource="forest.png">
     <Grid ColumnDefinitions="220,*">
 
@@ -130,37 +129,114 @@
                    HorizontalOptions="Start"/>
 
 
-
-
                 <!-- lisää ja etsiä alue -->
                 <HorizontalStackLayout Spacing="15" VerticalOptions="Center">
                     <Button Text="+ Lisää Palvelu" 
                             Clicked="OnAddPalvelutClicked"
                             BackgroundColor="#D8B98F"
                             TextColor="Black" />
-                    <SearchBar x:Name="RegionSearchBar"
+                    <SearchBar x:Name="PalveluSearchBar"
                                Placeholder="Hae palvelun nimen perusteella"
                                WidthRequest="300"
                                TextChanged="OnSearchRegion" />
                 </HorizontalStackLayout>
 
+                <CollectionView x:Name="PalveluListaView">
+                    <CollectionView.Header>
+                        <Grid Padding="10,5" BackgroundColor="White" Margin="10" ColumnDefinitions="*,*,*,*,*, Auto">
+                            <Label Text="Palvelun Nimi" FontAttributes="Bold" TextColor="#2E5632" />
+                            <Label Text="Alue" FontAttributes="Bold" TextColor="#2E5632" Grid.Column="1" />
+                            <Label Text="Kuvaus" FontAttributes="Bold" TextColor="#2E5632" Grid.Column="2" />
+                            <Label Text="Hinta" FontAttributes="Bold" TextColor="#2E5632" Grid.Column="3" />
+                            <Label Text="ALV" FontAttributes="Bold" TextColor="#2E5632" Grid.Column="4"/>
+                            <Label Text="" Grid.Column="5" />
+                        </Grid>
+                    </CollectionView.Header>
+
+                    <!--palvelulist-->
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame BackgroundColor="White" Padding="10" Margin="0,5" CornerRadius="10">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnPalveluRowTapped" CommandParameter="{Binding .}" />
+                                </Frame.GestureRecognizers>
+                                <Grid ColumnDefinitions="*,*,*,*,*, Auto">
+                                    <Label Text="{Binding PalveluNimi}"  TextColor="#2E5632" />
+                                    <Label Text="{Binding AlueNimi}" Grid.Column="1" TextColor="#2E5632" />
+                                    <Label Text="{Binding Kuvaus}" Grid.Column="2" TextColor="#2E5632" />
+                                    <Label Text="{Binding Hinta}" Grid.Column="3" TextColor="#2E5632" />
+                                    <Label Text="{Binding Alv}" Grid.Column="4" TextColor="#2E5632" />
+                                    <Button Text="Poista"
+                                             Grid.Column="5"
+                                             BackgroundColor="#9B1C1C"
+                                             TextColor="White"
+                                             WidthRequest="70"
+                                             Clicked="OnPoistaClicked"
+                                             CommandParameter="{Binding .}" />
+                                </Grid>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
             </VerticalStackLayout>
         </ScrollView>
+
+
+        <!--POPUP SIVU FOR PalveluLIST-->
+
+        <Grid x:Name="PopupOverlay"
+       BackgroundColor="#80000000"
+       IsVisible="False"
+       VerticalOptions="FillAndExpand"
+       HorizontalOptions="FillAndExpand"
+       Padding="0"
+       Grid.ColumnSpan="2">
+
+            <Grid HorizontalOptions="Center" VerticalOptions="Center">
+                <Frame BackgroundColor="White"
+        CornerRadius="20"
+        Padding="30"
+        WidthRequest="400"
+        HasShadow="True"
+        HorizontalOptions="Center"
+        VerticalOptions="Center">
+
+                    <VerticalStackLayout Spacing="10">
+                        <Label x:Name="PopupTitleLabel"
+                Text="Lisää uusi palvelu"
+                FontSize="20"
+                FontAttributes="Bold"
+                TextColor="#2E5632"
+                HorizontalOptions="Center" />
+                        <Entry x:Name="PalveluNimiEntry" Placeholder="Palvelun nimi" TextColor="#2E5632" />
+                        <Picker x:Name="AluePicker" Title="Alue" TextColor="#2E5632" ItemDisplayBinding="{Binding AlueNimi}"/>
+                        <Entry x:Name="KuvausEntry" Placeholder="Kuvaus" TextColor="#2E5632" />
+                        <Entry x:Name="HintaEntry" Placeholder="Hinta (€)" Keyboard="Numeric" TextColor="#2E5632" />
+                        <Entry x:Name="AlvEntry" Placeholder="Alv (€)" Keyboard="Numeric" TextColor="#2E5632" />
+                        <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                            <Button Text="Tallenna"
+                     BackgroundColor="#D8B98F"
+                     TextColor="Black"
+                     Clicked="OnSavePalveluClicked"
+                     WidthRequest="100"/>
+
+                            <Button Text="Peruuta"
+                     BackgroundColor="#CCCCCC"
+                     TextColor="Black"
+                     Clicked="OnCancelPopupClicked"
+                     WidthRequest="100"/>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </Frame>
+            </Grid>
+        </Grid>
+
+        <!--popupend-->
+
+
+
     </Grid>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

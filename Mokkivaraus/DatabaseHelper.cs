@@ -74,7 +74,7 @@ namespace Mokkivaraus
                 return affectedRows;
             }
 
-        public async Task<object> ExecuteScalarAsync(string query, Dictionary<string, object> parameters)
+        public async Task<object?> ExecuteScalarAsync(string query, Dictionary<string, object> parameters)
         {
             using (var connection = new MySqlConnection(connectionString))
             {

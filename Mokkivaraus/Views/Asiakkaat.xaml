@@ -127,9 +127,11 @@
             <VerticalStackLayout Padding="30" Spacing="25">
 
                 <!--Asiakkaiden otsikko -->
-                <HorizontalStackLayout Spacing="15" VerticalOptions="Center">
+                
                 <Label Text="Asiakkaiden Tiedot" FontSize="28" FontAttributes="Bold" TextColor="#2E5632" />
-                <Button Text="+ Lisää Asiakas" Clicked="OnAddCustomerClicked" BackgroundColor="#D8B98F" TextColor="Black" />
+
+                <HorizontalStackLayout Spacing="15" VerticalOptions="Center">
+                    <Button Text="+ Lisää Asiakas" Clicked="OnAddCustomerClicked" BackgroundColor="#D8B98F" TextColor="Black" />
                     <SearchBar x:Name="CustomerSearchBar" Placeholder="Hae asiakas nimellä..." TextChanged="OnSearchTextChanged" HorizontalOptions="Start"
                            TextColor="#2E5632"
                            Opacity="5"
@@ -140,14 +142,13 @@
                 <CollectionView x:Name="AsiakasListaView">
                     <CollectionView.Header>
                         <Frame CornerRadius="5" BackgroundColor="White" Margin="5">
-                            <Grid ColumnDefinitions="*,*,*,*,*,*,*" ColumnSpacing="10">
+                            <Grid ColumnDefinitions="*,*,*,*,*,*" ColumnSpacing="10">
                                 <Label Text="Etunimi" FontAttributes="Bold" TextColor="#2E5632" />
                                 <Label Text="Sukunimi" FontAttributes="Bold" TextColor="#2E5632" Grid.Column="1" />
                                 <Label Text="PostiNo." FontAttributes="Bold" TextColor="#2E5632" Grid.Column="2" />
                                 <Label Text="Lahiosoite" FontAttributes="Bold" TextColor="#2E5632" Grid.Column="3" />
                                 <Label Text="Sähköposti" FontAttributes="Bold" TextColor="#2E5632" Grid.Column="4" />
                                 <Label Text="PuhelinNo." FontAttributes="Bold" TextColor="#2E5632" Grid.Column="5" />
-                                <Label Text="VarausID" FontAttributes="Bold" TextColor="#2E5632" Grid.Column="6" />
 
                             </Grid>
                         </Frame>
@@ -158,14 +159,16 @@
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <Frame CornerRadius="5" BackgroundColor="White">
-                                <Grid ColumnDefinitions="*,*,*,*,100,*,*" ColumnSpacing="10">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnAsiakasRowTapped" CommandParameter="{Binding .}" />
+                                </Frame.GestureRecognizers>
+                                <Grid ColumnDefinitions="*,*,*,*,100,*" ColumnSpacing="10">
                                     <Label Text="{Binding etunimi}" TextColor="#2E5632" />
                                     <Label Text="{Binding sukunimi}" TextColor="#2E5632" Grid.Column="1" />
                                     <Label Text="{Binding postiNo}" TextColor="#2E5632" Grid.Column="2" />
                                     <Label Text="{Binding lahiOsoite}" TextColor="#2E5632" Grid.Column="3" />
                                     <Label Text="{Binding email}" TextColor="#2E5632" Grid.Column="4" />
                                     <Label Text="{Binding puhelin}" TextColor="#2E5632" Grid.Column="5" />
-                                    <Label Text="{Binding varausID}" TextColor="#2E5632" Grid.Column="6" />
                                 </Grid>
                             </Frame>
                         </DataTemplate>
@@ -174,6 +177,71 @@
 
             </VerticalStackLayout>
         </ScrollView>
+
+
+        <!--POPUP SIVU FOR AsiakasLIST-->
+
+        <Grid x:Name="PopupOverlay"
+                BackgroundColor="#80000000"
+                IsVisible="False"
+                VerticalOptions="FillAndExpand"
+                HorizontalOptions="FillAndExpand"
+                Padding="0"
+                Grid.ColumnSpan="2">
+
+            <Grid HorizontalOptions="Center" VerticalOptions="Center">
+                <Frame BackgroundColor="White"
+                         CornerRadius="20"
+                         Padding="30"
+                         WidthRequest="400"
+                         HasShadow="True"
+                         HorizontalOptions="Center"
+                         VerticalOptions="Center">
+
+                    <VerticalStackLayout Spacing="10">
+                        <Label x:Name="PopupTitleLabel"
+                                 Text="Lisää uusi asiakas"
+                                 FontSize="20"
+                                 FontAttributes="Bold"
+                                 TextColor="#2E5632"
+                                 HorizontalOptions="Center" />
+                            <Entry x:Name="EtunimiEntry" Placeholder="Etunimi" TextColor="#2E5632" />
+                            <Entry x:Name="SukunimiEntry" Placeholder="Sukunimi" TextColor="#2E5632" />
+                            <Entry x:Name="PostinroEntry" Placeholder="Posti Numero" TextColor="#2E5632" />
+                            <Entry x:Name="LahiosoiteEntry" Placeholder="Lahiosoite" TextColor="#2E5632" />
+                            <Entry x:Name="EmailEntry" Placeholder="email" TextColor="#2E5632" />
+                            <Entry x:Name="PuhelinEntry" Placeholder="puhelin" Keyboard="Numeric" TextColor="#2E5632" />
+                            <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                            <Button Text="Tallenna"
+                                      BackgroundColor="#D8B98F"
+                                      TextColor="Black"
+                                      Clicked="OnSaveAsiakasClicked"
+                                      WidthRequest="100"/>
+
+                            <Button x:Name="PoistaButton"
+                                      Text="Poista"
+                                      CommandParameter="{Binding .}"
+                                      BackgroundColor="#D8B98F"
+                                      TextColor="Red"
+                                      Clicked="OnPoistaClicked"
+                                      WidthRequest="100"/>                               
+                                
+
+                            <Button Text="Peruuta"
+                                      BackgroundColor="#CCCCCC"
+                                      TextColor="Black"
+                                      Clicked="OnCancelPopupClicked"
+                                      WidthRequest="100"/>  
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </Frame>
+            </Grid>
+        </Grid>
+
+        <!--popupend-->
+
+
+
     </Grid>
 
     <!-- hover css style -->
