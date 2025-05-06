@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using DotNetEnv;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -10,7 +11,21 @@ namespace Mokkivaraus
 {
     public class DatabaseHelper
     {
-        private readonly string connectionString = "server=;port=;database=;user=;password=";
+        
+            private readonly string connectionString;
+
+            public DatabaseHelper()
+            {
+            DotNetEnv.Env.Load(Path.Combine(AppContext.BaseDirectory, ".env"));
+
+            Console.WriteLine("DB server: " + DotNetEnv.Env.GetString("MYSQL_HOST")); //test
+
+            connectionString = $"server={DotNetEnv.Env.GetString("MYSQL_HOST")};" +
+                           $"port={DotNetEnv.Env.GetString("MYSQL_PORT")};" +
+                           $"database={DotNetEnv.Env.GetString("MYSQL_DB")};" +
+                           $"user={DotNetEnv.Env.GetString("MYSQL_USER")};" +
+                           $"password={DotNetEnv.Env.GetString("MYSQL_PASSWORD")}";
+        }
             public async Task<DataTable> GetDataAsync(string query)
             {
                         DataTable dt = new DataTable();
