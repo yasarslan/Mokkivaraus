@@ -7,24 +7,62 @@ using System.Collections.ObjectModel;
 
 public partial class LaskutPage : ContentPage
 {
-    private ObservableCollection<Lasku> Laskut = new ObservableCollection<Lasku>();
-    private ObservableCollection<Lasku> LaskutLista; //Esimerkki list//
+    DatabaseHelper dbHelper = new DatabaseHelper();
+    private ObservableCollection<Lasku> LaskutLista = new ObservableCollection<Lasku>();
     public LaskutPage()
 	{
 		InitializeComponent();
 
 
-        // Esimerkiksi Tiedot (Laskut) -luokka
-        LaskutLista = new ObservableCollection<Lasku>
-        {
-            new Lasku { LaskuNumero = "001", Asiakas = "Matti Meikäläinen", Summa = "150 €", Tuote = "Mökkivuokra", Tila = "Maksettu", Paivamaara = "01.06.2025" },
-            new Lasku { LaskuNumero = "002", Asiakas = "Anna Esimerkki", Summa = "200 €", Tuote = "Saunavuokra", Tila = "Avoin", Paivamaara = "03.06.2025" }
-        };
-
-        LaskutCollectionView.ItemsSource = LaskutLista;
-        //esimerkki////
+        LoadLaskutFromDb();
     }
 
+
+    private async void LoadLaskutFromDb()
+    {
+        LaskutLista = await GetLaskutFromDatabaseAsync();
+        LaskutCollectionView.ItemsSource = LaskutLista;
+    }
+
+    public async Task<ObservableCollection<Lasku>> GetLaskutFromDatabaseAsync()
+    {
+        const string query = "SELECT lasku_id, laskunumero, asiakas, summa, tuote, tila, paivamaara FROM laskut ORDER BY CAST(laskunumero AS UNSIGNED)";
+
+        var laskut = new ObservableCollection<Lasku>();
+
+        try
+        {
+            var table = await dbHelper.GetDataAsync(query);
+
+            foreach (System.Data.DataRow row in table.Rows)
+            {
+                string paivamaara = "-";
+                if (DateTime.TryParse(row["paivamaara"]?.ToString(), out var parsedDate) &&
+                    parsedDate != DateTime.MinValue &&
+                    parsedDate.Year > 1900)
+                {
+                    paivamaara = parsedDate.ToString("dd.MM.yyyy");
+                }
+                var lasku = new Lasku
+                {
+                    LaskuNumero = row["laskunumero"].ToString(),
+                    Asiakas = row["asiakas"].ToString(),
+                    Summa = row["summa"].ToString() + " €",
+                    Tuote = row["tuote"].ToString(),
+                    Tila = row["tila"].ToString(),
+                    Paivamaara = paivamaara
+
+                };
+                laskut.Add(lasku);
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Virhe haettaessa laskuja: " + ex.Message);
+        }
+
+        return laskut;
+    }
     //popup////////////////////////////
     private void OnAddLaskuClicked(object sender, EventArgs e)
     {
@@ -43,7 +81,7 @@ public partial class LaskutPage : ContentPage
         SummaEntry.Text = "";
         TuoteEntry.Text = "";
         TilaEntry.Text = "";
-        PaivamaaraEntry.Text = "";
+        PaivamaaraPicker.Date = DateTime.Now;
     }
 
     private void OnCancelLaskuPopupClicked(object sender, EventArgs e)
@@ -64,8 +102,11 @@ public partial class LaskutPage : ContentPage
             SummaEntry.Text = valittu.Summa;
             TuoteEntry.Text = valittu.Tuote;
             TilaEntry.Text = valittu.Tila;
-            PaivamaaraEntry.Text = valittu.Paivamaara;
-            
+            if (DateTime.TryParse(valittu.Paivamaara, out var parsedDate))
+            {
+                PaivamaaraPicker.Date = parsedDate;
+            }
+
             //näytä buttonit
             PoistaLaskuButton.IsVisible = true;
             PdfLaskuButton.IsVisible = true;
@@ -76,33 +117,71 @@ public partial class LaskutPage : ContentPage
     }
 
 
-    private void OnSaveLaskuClicked(object sender, EventArgs e)
+    private async void OnSaveLaskuClicked(object sender, EventArgs e)
     {
         string laskuNumero = LaskuNumeroEntry.Text;
-        var olemassaOleva = Laskut.FirstOrDefault(l => l.LaskuNumero == laskuNumero);
 
-        if (olemassaOleva != null)
+        var uusi = new Lasku
         {
-            // Päivitä olemassa oleva lasku
-            olemassaOleva.Asiakas = AsiakasEntry.Text;
-            olemassaOleva.Summa = SummaEntry.Text;
-            olemassaOleva.Tuote = TuoteEntry.Text;
-            olemassaOleva.Tila = TilaEntry.Text;
-            olemassaOleva.Paivamaara = PaivamaaraEntry.Text;
-        }
-        else
+            LaskuNumero = laskuNumero,
+            Asiakas = AsiakasEntry.Text,
+            Summa = SummaEntry.Text,
+            Tuote = TuoteEntry.Text,
+            Tila = TilaEntry.Text,
+            Paivamaara = PaivamaaraPicker.Date.ToString("yyyy-MM-dd")
+        };
+
+        try
         {
-            // Lisää uusi lasku
-            var uusi = new Lasku
+            string tarkistaQuery = "SELECT COUNT(*) FROM laskut WHERE laskunumero = @laskunumero";
+            var checkParams = new Dictionary<string, object>
+        {
+            { "@laskunumero", laskuNumero }
+        };
+
+            var countResult = await dbHelper.ExecuteScalarAsync(tarkistaQuery, checkParams);
+            bool onJoOlemassa = Convert.ToInt32(countResult) > 0;
+
+            
+            string sqlQuery;
+            var parameters = new Dictionary<string, object>
+        {
+            { "@laskunumero", uusi.LaskuNumero },
+            { "@asiakas", uusi.Asiakas },
+            { "@summa", uusi.Summa.Replace("€", "").Trim() },
+            { "@tuote", uusi.Tuote },
+            { "@tila", uusi.Tila },
+            { "@paivamaara", uusi.Paivamaara }
+        };
+
+            
+            if (onJoOlemassa)
             {
-                LaskuNumero = LaskuNumeroEntry.Text,
-                Asiakas = AsiakasEntry.Text,
-                Summa = SummaEntry.Text,
-                Tuote = TuoteEntry.Text,
-                Tila = TilaEntry.Text,
-                Paivamaara = PaivamaaraEntry.Text
-            };
-            Laskut.Add(uusi);
+                sqlQuery = @"UPDATE laskut SET asiakas = @asiakas, summa = @summa, tuote = @tuote, tila = @tila, paivamaara = @paivamaara 
+                         WHERE laskunumero = @laskunumero";
+            }
+            else
+            {
+                sqlQuery = @"INSERT INTO laskut (laskunumero, asiakas, summa, tuote, tila, paivamaara) 
+                         VALUES (@laskunumero, @asiakas, @summa, @tuote, @tila, @paivamaara)";
+            }
+
+            
+            int result = await dbHelper.ExecuteNonQueryAsync(sqlQuery, parameters);
+
+            if (result > 0)
+            {
+                await DisplayAlert("Onnistui", onJoOlemassa ? "Lasku päivitetty!" : "Lasku lisätty!", "OK");
+                LoadLaskutFromDb(); // päivitä
+            }
+            else
+            {
+                await DisplayAlert("Virhe", "Tietokantatoiminto epäonnistui.", "OK");
+            }
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Virhe", "Poikkeus: " + ex.Message, "OK");
         }
 
         LaskuPopupOverlay.IsVisible = false;
@@ -110,17 +189,43 @@ public partial class LaskutPage : ContentPage
     }
 
 
-    private void OnPoistaLaskuClicked(object sender, EventArgs e)
+    private async void OnPoistaLaskuClicked(object sender, EventArgs e)
     {
         var lasku = PdfLaskuButton.CommandParameter as Lasku;
 
-        if (lasku != null && Laskut.Contains(lasku))
+        if (lasku != null)
         {
-            Laskut.Remove(lasku);
-        }
+            bool vastaus = await DisplayAlert("Vahvistus", "Haluatko varmasti poistaa tämän laskun?", "Kyllä", "Peruuta");
+            if (!vastaus) return;
 
-        LaskuPopupOverlay.IsVisible = false;
-        ClearLaskuPopupFields();
+            // poistaa db:Sta
+            string deleteQuery = "DELETE FROM laskut WHERE laskunumero = @laskunumero";
+            var parameters = new Dictionary<string, object>
+        {
+            { "@laskunumero", lasku.LaskuNumero }
+        };
+
+            try
+            {
+                int result = await dbHelper.ExecuteNonQueryAsync(deleteQuery, parameters);
+                if (result > 0)
+                {
+                    await DisplayAlert("Onnistui", "Lasku poistettu!", "OK");
+                    LoadLaskutFromDb(); 
+                }
+                else
+                {
+                    await DisplayAlert("Virhe", "Laskun poistaminen epäonnistui.", "OK");
+                }
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Virhe", "Poikkeus: " + ex.Message, "OK");
+            }
+
+            LaskuPopupOverlay.IsVisible = false;
+            ClearLaskuPopupFields();
+        }
     }
     //popup///////
 

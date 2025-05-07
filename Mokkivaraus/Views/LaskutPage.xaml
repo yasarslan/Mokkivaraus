@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Mokkivaraus.Views.LaskutPage"
              Title=""
@@ -220,7 +222,9 @@
                     <Entry x:Name="SummaEntry" Placeholder="Summa (€)" Keyboard="Numeric" />
                     <Entry x:Name="TuoteEntry" Placeholder="Tuote/Palvelu" />
                     <Entry x:Name="TilaEntry" Placeholder="Tila (Maksettu/Avoin)" />
-                    <Entry x:Name="PaivamaaraEntry" Placeholder="Päivämäärä (esim. 01.06.2025)" />
+                    <DatePicker x:Name="PaivamaaraPicker"
+                                Format="dd.MM.yyyy"
+                                Date="{x:Static sys:DateTime.Now}" /> 
 
                     <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
                         <Button Text="Tallenna"
