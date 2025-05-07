@@ -163,12 +163,12 @@
                                     <TapGestureRecognizer Tapped="OnLaskuRowTapped" CommandParameter="{Binding .}" />
                                 </Frame.GestureRecognizers>
                                 <Grid Padding="10,5" ColumnDefinitions="*,*,*,*,*,*,Auto">
-                                    <Label Text="{Binding LaskuNumero}" Grid.Column="0" />
-                                    <Label Text="{Binding Asiakas}" Grid.Column="1" />
-                                    <Label Text="{Binding Summa}" Grid.Column="2" />
-                                    <Label Text="{Binding Tuote}" Grid.Column="3" />
-                                    <Label Text="{Binding Tila}" Grid.Column="4" />
-                                    <Label Text="{Binding Paivamaara}" Grid.Column="5" />
+                                    <Label Text="{Binding LaskuNumero}" TextColor="Black" Grid.Column="0" />
+                                    <Label Text="{Binding Asiakas}" TextColor="Black" Grid.Column="1" />
+                                    <Label Text="{Binding Summa}" TextColor="Black" Grid.Column="2" />
+                                    <Label Text="{Binding Tuote}" TextColor="Black" Grid.Column="3" />
+                                    <Label Text="{Binding Tila}" TextColor="Black" Grid.Column="4" />
+                                    <Label Text="{Binding Paivamaara}" TextColor="Black" Grid.Column="5" />
 
 
                                     
@@ -217,12 +217,12 @@
                        TextColor="#2E5632"
                        HorizontalOptions="Center" />
 
-                    <Entry x:Name="LaskuNumeroEntry" Placeholder="Laskun numero" />
-                    <Entry x:Name="AsiakasEntry" Placeholder="Asiakas" />
-                    <Entry x:Name="SummaEntry" Placeholder="Summa (€)" Keyboard="Numeric" />
-                    <Entry x:Name="TuoteEntry" Placeholder="Tuote/Palvelu" />
-                    <Entry x:Name="TilaEntry" Placeholder="Tila (Maksettu/Avoin)" />
-                    <DatePicker x:Name="PaivamaaraPicker"
+                        <Entry x:Name="LaskuNumeroEntry" TextColor="Black" Placeholder="Laskun numero" />
+                        <Entry x:Name="AsiakasEntry" TextColor="Black" Placeholder="Asiakas" />
+                        <Entry x:Name="SummaEntry" TextColor="Black" Placeholder="Summa (€)" Keyboard="Numeric" />
+                        <Entry x:Name="TuoteEntry" TextColor="Black" Placeholder="Tuote/Palvelu" />
+                        <Entry x:Name="TilaEntry" TextColor="Black" Placeholder="Tila (Maksettu/Avoin)" />
+                        <DatePicker x:Name="PaivamaaraPicker" TextColor="Black"
                                 Format="dd.MM.yyyy"
                                 Date="{x:Static sys:DateTime.Now}" /> 
 
