@@ -476,7 +476,7 @@ public partial class PalvelutPage : ContentPage
 
         try
         {
-            object result = await dbHelper.ExecuteScalarAsync(insertQuery, parameters);  // Execute the query and get the new service ID
+            object? result = await dbHelper.ExecuteScalarAsync(insertQuery, parameters);  // Execute the query and get the new service ID
             if (result != null && int.TryParse(result.ToString(), out int newId))
             {
                 palvelu.PalveluID = newId; // Assign the new ID to the service object

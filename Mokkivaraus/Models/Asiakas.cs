@@ -17,6 +17,6 @@ namespace Mokkivaraus.Models
         public string? puhelin {  get; set; }
         public int varausID {  get; set; }
 
-        public string? kokonaisNimi=>$"{etunimi} {sukunimi}";
+        public string? kokonaisNimi=>$"{etunimi} {sukunimi}".Trim();
     }
 }

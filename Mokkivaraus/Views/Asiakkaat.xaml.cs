@@ -13,7 +13,7 @@ public partial class Asiakkaat : ContentPage
     private Asiakas? _editingAsiakas = null;
     public async Task<ObservableCollection<Asiakas>> GetAsiakasAsync()
     {
-        const string GetAsiakasQuery = "SELECT asiakas_id, etunimi,sukunimi,postinro,lahiosoite,email,puhelinnro FROM asiakas ORDER BY etunimi ASC";
+        const string GetAsiakasQuery = "SELECT asiakas_id, etunimi, sukunimi, postinro, lahiosoite, email, puhelinnro FROM asiakas ORDER BY etunimi ASC";
 
         var customer = new ObservableCollection<Asiakas>();
 

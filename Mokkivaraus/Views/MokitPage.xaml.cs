@@ -268,7 +268,6 @@ public partial class MokitPage : ContentPage
 
     private async void OnAsiakkaatClicked(object sender, EventArgs e)
     {
-        //Navigoi Asiakkaat-sivulle
         await Navigation.PushAsync(new Views.Asiakkaat());
     }
 
@@ -464,7 +463,7 @@ public partial class MokitPage : ContentPage
 
         try
         {
-            object result = await dbHelper.ExecuteScalarAsync(insertQuery, parameters);  // Execute the query and get the new cabin ID
+            object? result = await dbHelper.ExecuteScalarAsync(insertQuery, parameters);  // Execute the query and get the new cabin ID
             if (result != null && int.TryParse(result.ToString(), out int newId))
             {
                 mokki.Mokki_id = newId; // Assign the new ID to the cabin object

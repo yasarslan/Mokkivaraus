@@ -133,6 +133,7 @@
                 <HorizontalStackLayout Spacing="15" VerticalOptions="Center">
                     <Button x:Name="LisaaVarausButton" 
                             Text="+ Uusi Varaus"
+                            Clicked="OnAddVarausClicked"
                             TextColor="Black" 
                             BackgroundColor="#D8B98F" 
                             HorizontalOptions="Start"/>
@@ -168,13 +169,16 @@
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <Frame CornerRadius="5" BackgroundColor="White">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnVarausRowTapped" CommandParameter="{Binding .}" />
+                                </Frame.GestureRecognizers>
                                 <Grid ColumnDefinitions="*,*,*,*,*,100,*,*" ColumnSpacing="10">
                                     <Label Text="{Binding asiakasVarattu.kokonaisNimi}" TextColor="#2E5632" />
                                     <Label Text="{Binding asiakasVarattu.puhelin}" TextColor="#2E5632" Grid.Column="1" />
                                     <Label Text="{Binding varausPaiva,StringFormat='{0:dd.MM.yyyy}'}" TextColor="#2E5632" Grid.Column="2" />
                                     <Label Text="{Binding Alue}" TextColor="#2E5632" Grid.Column="3" />
                                     <Label Text="{Binding mokkiVarattu.MokkiNimi}" TextColor="#2E5632" Grid.Column="4" />
-                                    <Label Text="{Binding palvelutVarattu}" TextColor="#2E5632" Grid.Column="5" />
+                                    <Label Text="{Binding palvelutVarattu}" TextColor="#2E5632" LineBreakMode="WordWrap"  Grid.Column="5" />
                                     <Label Text="{Binding varausAlku, StringFormat='{0:dd.MM.yyyy}'}" TextColor="#2E5632" Grid.Column="6" />
                                     <Label Text="{Binding varausLoppu, StringFormat='{0:dd.MM.yyyy}'}" TextColor="#2E5632" Grid.Column="7" />
                                     
@@ -186,6 +190,125 @@
 
             </VerticalStackLayout>
         </ScrollView>
+
+
+        <!--POPUP SIVU FOR VARAUKSETILIST-->
+
+        <Grid x:Name="PopupOverlay"
+              BackgroundColor="#80000000"
+              IsVisible="False"
+              VerticalOptions="FillAndExpand"
+              HorizontalOptions="FillAndExpand"
+              Padding="0"
+              Grid.ColumnSpan="2">
+
+            <Grid HorizontalOptions="Center" VerticalOptions="Center">
+                <Frame BackgroundColor="White"
+                       CornerRadius="20"
+                       Padding="30"
+                       WidthRequest="400"
+                       HasShadow="True"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center">    
+
+                    <VerticalStackLayout Spacing="10">
+                        <Label x:Name="PopupTitleLabel"
+                               Text="Lisää uusi varaus"
+                               FontSize="20"
+                               FontAttributes="Bold"
+                               TextColor="#2E5632"
+                               HorizontalOptions="Center" />
+
+                        <Picker x:Name="AsiakasPicker"
+                                    Title="Asiakas"
+                                    TextColor="#2E5632"
+                                    ItemDisplayBinding="{Binding kokonaisNimi}"
+                                    SelectedIndexChanged="AsiakasPicker_SelectedIndexChanged"/>
+                        <Entry x:Name="AsiakasPuhelinEntry" Placeholder="Asiakas Puhelin" IsReadOnly="True" TextColor="#2E5632" />
+
+                        <Picker x:Name="AluePicker" 
+                                Title="Alue" 
+                                TextColor="#2E5632" 
+                                ItemDisplayBinding="{Binding AlueNimi}"
+                                SelectedIndexChanged="AluePicker_SelectedIndexChanged"/>
+
+                        <Picker x:Name="MokkiPicker"
+                                Title="Mökki"
+                                TextColor="#2E5632"
+                                ItemDisplayBinding="{Binding MokkiNimi}" />
+
+                        <Picker x:Name="PalvelutPicker"
+                                Title="Palvelut"
+                                TextColor="#2E5632"
+                                ItemDisplayBinding="{Binding PalveluNimi}" />
+
+                        <Label Text="Varattu pvm" FontAttributes="Bold" TextColor="#2E5632"/>
+                        <HorizontalStackLayout Spacing="10">
+                            <DatePicker x:Name="VarattupvmDatePicker" 
+                                      Date="{Binding}" 
+                                      Format="dd.MM.yyyy" 
+                                      TextColor="#2E5632"/>
+                            <TimePicker x:Name="VarattupvmTimePicker" 
+                                      Time="{Binding}" 
+                                      Format="HH:mm" 
+                                      TextColor="#2E5632"/>
+                        </HorizontalStackLayout>                        
+
+                        <Label Text="Varauksen alku" FontAttributes="Bold" TextColor="#2E5632"/>
+                        <HorizontalStackLayout Spacing="10">
+                            <DatePicker x:Name="VarattuAlkuPvmDatePicker"
+                                      Date="{Binding}"
+                                      Format="dd.MM.yyyy"
+                                      TextColor="#2E5632"/>
+                            <TimePicker x:Name="VarattuAlkuPvmTimePicker"
+                                      Time="{Binding}"
+                                      Format="HH:mm"
+                                      TextColor="#2E5632"/>
+                        </HorizontalStackLayout>
+
+                        <Label Text="Varauksen loppu" FontAttributes="Bold" TextColor="#2E5632"/>
+                        <HorizontalStackLayout Spacing="10">
+                            <DatePicker x:Name="VarattuLoppuPvmDatePicker"
+                                      Date="{Binding}"
+                                      Format="dd.MM.yyyy"
+                                      TextColor="#2E5632"/>
+                            <TimePicker x:Name="VarattuLoppuPvmTimePicker"
+                                      Time="{Binding }"
+                                      Format="HH:mm"
+                                      TextColor="#2E5632"/>
+                        </HorizontalStackLayout>
+
+
+
+                        <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                            <Button Text="Tallenna"
+                                    BackgroundColor="#D8B98F"
+                                    TextColor="Black"
+                                    Clicked="OnSaveVarausClicked"
+                                    WidthRequest="100"/>
+
+                            <Button Text="Peruuta"
+                                    BackgroundColor="#CCCCCC"
+                                    TextColor="Black"
+                                    Clicked="OnCancelPopupClicked"
+                                    WidthRequest="100"/>
+                            
+                            <Button Text="Poista"
+                                    BackgroundColor="#CCCCCC"
+                                    TextColor="Black"
+                                    Clicked="OnDeleteClicked"
+                                    WidthRequest="100"/>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </Frame>
+            </Grid>
+        </Grid>
+
+        <!--popupend-->
+
+
+
+
     </Grid>
 
     <!-- hover css style -->

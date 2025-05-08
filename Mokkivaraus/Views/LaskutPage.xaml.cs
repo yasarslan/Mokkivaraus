@@ -45,13 +45,12 @@ public partial class LaskutPage : ContentPage
                 }
                 var lasku = new Lasku
                 {
-                    LaskuNumero = row["laskunumero"].ToString(),
-                    Asiakas = row["asiakas"].ToString(),
-                    Summa = row["summa"].ToString() + " €",
-                    Tuote = row["tuote"].ToString(),
-                    Tila = row["tila"].ToString(),
+                    LaskuNumero = row["laskunumero"]?.ToString() ?? string.Empty,
+                    Asiakas = row["asiakas"]?.ToString() ?? string.Empty,
+                    Summa = (row["summa"]?.ToString() ?? string.Empty) + " €",
+                    Tuote = row["tuote"]?.ToString() ?? string.Empty,
+                    Tila = row["tila"]?.ToString() ?? string.Empty,
                     Paivamaara = paivamaara
-
                 };
                 laskut.Add(lasku);
             }
@@ -193,7 +192,7 @@ public partial class LaskutPage : ContentPage
     {
         var lasku = PdfLaskuButton.CommandParameter as Lasku;
 
-        if (lasku != null)
+        if (lasku != null && !string.IsNullOrEmpty(lasku.LaskuNumero)) // Ensure LaskuNumero is not null
         {
             bool vastaus = await DisplayAlert("Vahvistus", "Haluatko varmasti poistaa tämän laskun?", "Kyllä", "Peruuta");
             if (!vastaus) return;
@@ -201,9 +200,9 @@ public partial class LaskutPage : ContentPage
             // poistaa db:Sta
             string deleteQuery = "DELETE FROM laskut WHERE laskunumero = @laskunumero";
             var parameters = new Dictionary<string, object>
-        {
-            { "@laskunumero", lasku.LaskuNumero }
-        };
+            {
+                { "@laskunumero", lasku.LaskuNumero } // LaskuNumero is guaranteed to be non-null here
+            };
 
             try
             {
@@ -211,7 +210,7 @@ public partial class LaskutPage : ContentPage
                 if (result > 0)
                 {
                     await DisplayAlert("Onnistui", "Lasku poistettu!", "OK");
-                    LoadLaskutFromDb(); 
+                    LoadLaskutFromDb();
                 }
                 else
                 {
@@ -225,6 +224,10 @@ public partial class LaskutPage : ContentPage
 
             LaskuPopupOverlay.IsVisible = false;
             ClearLaskuPopupFields();
+        }
+        else
+        {
+            await DisplayAlert("Virhe", "LaskuNumero on tyhjä tai null.", "OK");
         }
     }
     //popup///////
@@ -422,6 +425,5 @@ public partial class LaskutPage : ContentPage
         Navigation.RemovePage(this);
     }
 
-    ////////
-    ///
+    
 }

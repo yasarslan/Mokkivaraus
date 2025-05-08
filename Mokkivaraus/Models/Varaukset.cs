@@ -12,6 +12,7 @@ namespace Mokkivaraus.Models
         public Asiakas? asiakasVarattu{get;set;}
         public Mokki? mokkiVarattu{get;set;}
         public string? Alue{get;set;}
+        public Palvelu? Palvelu{get;set;}
         public string? palvelutVarattu{get;set;}
         public DateTime? varausPaiva{get;set;}
         public DateTime? varausAlku{get;set;}
