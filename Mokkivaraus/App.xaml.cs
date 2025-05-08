@@ -8,10 +8,10 @@
             
 
 
-            MainPage = new NavigationPage(new Views.MainMenuPage());
+            //MainPage = new NavigationPage(new Views.MainMenuPage());
 
             // Set the main page to the login page
-            //MainPage = new NavigationPage(new Views.LoginPage());
+            MainPage = new NavigationPage(new Views.LoginPage());
         }
 
         protected override Window CreateWindow(IActivationState activationState)
