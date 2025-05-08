@@ -388,23 +388,48 @@ public partial class VarauksetViewPage : ContentPage
 
     private async void OnSaveVarausClicked(object sender, EventArgs e)
     {
+        // --- VALIDATION ---
         var selectedAsiakas = AsiakasPicker.SelectedItem as Asiakas;
-        var selectedMokki = MokkiPicker.SelectedItem as Mokki;
         var selectedAlue = AluePicker.SelectedItem as Alue;
+        var selectedMokki = MokkiPicker.SelectedItem as Mokki;
+        var selectedPalvelu = PalvelutPicker.SelectedItem as Palvelu;
 
-        if (selectedAsiakas == null || selectedMokki == null || selectedAlue == null)
+        if (selectedAsiakas == null)
         {
-            await DisplayAlert("Virhe", "Valitse asiakas, alue ja mökki.", "OK");
+            await DisplayAlert("Virhe", "Valitse asiakas ennen tallennusta.", "OK");
             return;
         }
+        if (selectedAlue == null)
+        {
+            await DisplayAlert("Virhe", "Valitse alue ennen tallennusta.", "OK");
+            return;
+        }
+        if (selectedMokki == null)
+        {
+            await DisplayAlert("Virhe", "Valitse mökki ennen tallennusta.", "OK");
+            return;
+        }
+        // You may want to require palvelu, or allow it to be null
 
         var varattuPvm = VarattupvmDatePicker.Date + VarattupvmTimePicker.Time;
         var alkuPvm = VarattuAlkuPvmDatePicker.Date + VarattuAlkuPvmTimePicker.Time;
         var loppuPvm = VarattuLoppuPvmDatePicker.Date + VarattuLoppuPvmTimePicker.Time;
 
+        if (alkuPvm < varattuPvm)
+        {
+            await DisplayAlert("Virhe", "Varauksen alku ei voi olla ennen varattua päivää.", "OK");
+            return;
+        }
+        if (loppuPvm <= alkuPvm)
+        {
+            await DisplayAlert("Virhe", "Varauksen loppu pitää olla varauksen alun jälkeen.", "OK");
+            return;
+        }
+
+        // --- EDITING ---
         if (_editingVaraus != null)
         {
-            // UPDATE existing reservation
+            // UPDATE VARAUS
             string updateQuery = @"
             UPDATE varaus
             SET asiakas_id = @asiakas_id,
@@ -413,7 +438,7 @@ public partial class VarauksetViewPage : ContentPage
                 varattu_alkupvm = @varattu_alkupvm,
                 varattu_loppupvm = @varattu_loppupvm
             WHERE varaus_id = @varaus_id";
-            var parameters = new Dictionary<string, object>
+            var updateParams = new Dictionary<string, object>
         {
             { "@asiakas_id", selectedAsiakas.asiakasID },
             { "@mokki_id", selectedMokki.Mokki_id },
@@ -422,26 +447,33 @@ public partial class VarauksetViewPage : ContentPage
             { "@varattu_loppupvm", loppuPvm },
             { "@varaus_id", _editingVaraus.varausID }
         };
+            int rows = await dbHelper.ExecuteNonQueryAsync(updateQuery, updateParams);
 
-            int rows = await dbHelper.ExecuteNonQueryAsync(updateQuery, parameters);
+            // --- UPDATE PALVELU ---
+            // Remove old palvelut for this varaus
+            string deletePalvelutQuery = "DELETE FROM varauksen_palvelut WHERE varaus_id = @varaus_id";
+            var delParams = new Dictionary<string, object> { { "@varaus_id", _editingVaraus.varausID } };
+            await dbHelper.ExecuteNonQueryAsync(deletePalvelutQuery, delParams);
+
+            // Insert new palvelu if selected
+            if (selectedPalvelu != null)
+            {
+                string insertPalveluQuery = @"INSERT INTO varauksen_palvelut (varaus_id, palvelu_id, lkm)
+                                          VALUES (@varaus_id, @palvelu_id, @lkm)";
+                var palveluParams = new Dictionary<string, object>
+            {
+                { "@varaus_id", _editingVaraus.varausID },
+                { "@palvelu_id", selectedPalvelu.PalveluID },
+                { "@lkm", 1 }
+            };
+                await dbHelper.ExecuteNonQueryAsync(insertPalveluQuery, palveluParams);
+            }
 
             if (rows > 0)
             {
-                // Update the item in the ObservableCollection
-                var index = VarausLista.IndexOf(_editingVaraus);
-                if (index >= 0)
-                {
-                    _editingVaraus.asiakasVarattu = selectedAsiakas;
-                    _editingVaraus.mokkiVarattu = selectedMokki;
-                    _editingVaraus.varausPaiva = varattuPvm;
-                    _editingVaraus.varausAlku = alkuPvm;
-                    _editingVaraus.varausLoppu = loppuPvm;
-                    _editingVaraus.Alue = selectedAlue.AlueNimi;
-
-                    // Force UI refresh
-                    VarausLista[index] = _editingVaraus;
-                }
-
+                // Reload the list so palvelu and costs update
+                VarausLista.Clear();
+                LoadVaraus();
                 await DisplayAlert("Onnistui", "Varaus päivitetty onnistuneesti!", "OK");
                 PopupOverlay.IsVisible = false;
                 _editingVaraus = null;
@@ -453,11 +485,12 @@ public partial class VarauksetViewPage : ContentPage
         }
         else
         {
-            // INSERT new reservation
+            // --- ADD NEW VARAUS ---
             string insertQuery = @"
             INSERT INTO varaus (asiakas_id, mokki_id, varattu_pvm, varattu_alkupvm, varattu_loppupvm)
-            VALUES (@asiakas_id, @mokki_id, @varattu_pvm, @varattu_alkupvm, @varattu_loppupvm)";
-            var parameters = new Dictionary<string, object>
+            VALUES (@asiakas_id, @mokki_id, @varattu_pvm, @varattu_alkupvm, @varattu_loppupvm);
+            SELECT LAST_INSERT_ID();";
+            var insertParams = new Dictionary<string, object>
         {
             { "@asiakas_id", selectedAsiakas.asiakasID },
             { "@mokki_id", selectedMokki.Mokki_id },
@@ -466,21 +499,29 @@ public partial class VarauksetViewPage : ContentPage
             { "@varattu_loppupvm", loppuPvm }
         };
 
-            int rows = await dbHelper.ExecuteNonQueryAsync(insertQuery, parameters);
+            // Get new varaus_id
+            object? result = await dbHelper.ExecuteScalarAsync(insertQuery, insertParams);
+            int newVarausId = Convert.ToInt32(result);
 
-            if (rows > 0)
+            // --- INSERT PALVELU ---
+            if (selectedPalvelu != null)
             {
-                // Optionally reload the list from DB to get the new ID and all fields
-                VarausLista.Clear();
-                LoadVaraus();
+                string insertPalveluQuery = @"INSERT INTO varauksen_palvelut (varaus_id, palvelu_id, lkm)
+                                          VALUES (@varaus_id, @palvelu_id, @lkm)";
+                var palveluParams = new Dictionary<string, object>
+            {
+                { "@varaus_id", newVarausId },
+                { "@palvelu_id", selectedPalvelu.PalveluID },
+                { "@lkm", 1 }
+            };
+                await dbHelper.ExecuteNonQueryAsync(insertPalveluQuery, palveluParams);
+            }
 
-                await DisplayAlert("Onnistui", "Varaus lisätty onnistuneesti!", "OK");
-                PopupOverlay.IsVisible = false;
-            }
-            else
-            {
-                await DisplayAlert("Virhe", "Varauksen lisääminen epäonnistui.", "OK");
-            }
+            // Reload the list so palvelu and costs update
+            VarausLista.Clear();
+            LoadVaraus();
+            await DisplayAlert("Onnistui", "Varaus lisätty onnistuneesti!", "OK");
+            PopupOverlay.IsVisible = false;
         }
     }
 
