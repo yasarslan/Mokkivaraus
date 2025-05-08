@@ -324,7 +324,23 @@ public partial class VarauksetViewPage : ContentPage
     // Search reservation
     private void OnSearchReservation(object sender, EventArgs e)
     {
+        var searchText = ReservationSearchBar.Text?.ToLower() ?? string.Empty;
 
+        // If search is empty, show all
+        if (string.IsNullOrWhiteSpace(searchText))
+        {
+            VarausListaView.ItemsSource = VarausLista;
+            return;
+        }
+
+        var filteredList = VarausLista.Where(v =>
+            (v.asiakasVarattu?.etunimi?.ToLower().Contains(searchText) ?? false) ||
+            (v.asiakasVarattu?.sukunimi?.ToLower().Contains(searchText) ?? false) ||
+            (v.mokkiVarattu?.MokkiNimi?.ToLower().Contains(searchText) ?? false) ||
+            (v.Alue?.ToLower().Contains(searchText) ?? false)
+        ).ToList();
+
+        VarausListaView.ItemsSource = new ObservableCollection<Varaukset>(filteredList);
     }
 
     //MENU - sidebar////////////////////
