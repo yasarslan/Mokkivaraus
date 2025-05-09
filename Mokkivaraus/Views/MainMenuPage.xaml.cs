@@ -9,17 +9,10 @@ public partial class MainMenuPage : ContentPage
     public MainMenuPage()
 	{
 		InitializeComponent();
-        LoadData();
+        
     }
 
-    private async void LoadData()
-    {
-        DataTable dt = await dbHelper.GetDataAsync("SELECT * FROM mokki");
-        foreach (DataRow row in dt.Rows)
-                {
-                    Console.WriteLine(row["mokkinimi"]); 
-        }
-    }
+    
 
 
     protected override  void OnAppearing()

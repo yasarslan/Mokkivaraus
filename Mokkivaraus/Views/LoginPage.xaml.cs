@@ -10,18 +10,10 @@ public partial class LoginPage : ContentPage
     public LoginPage()
     {
         InitializeComponent();
-        LoadData();
+        
     }
 
-    private async void LoadData()
-    {
-        DataTable dt = await dbHelper.GetDataAsync("SELECT * FROM mokki");
-        foreach (DataRow row in dt.Rows)
-        {
-            Console.WriteLine(row["mokkinimi"]);
-        }
-    }
-
+    
     private async void OnLoginClicked(object sender, EventArgs e)
     {
         string username = UsernameEntry.Text;
