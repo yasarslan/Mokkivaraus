@@ -209,8 +209,8 @@
                        WidthRequest="400"
                        HasShadow="True"
                        HorizontalOptions="Center"
-                       VerticalOptions="Center">    
-
+                       VerticalOptions="Center">
+                    
                     <VerticalStackLayout Spacing="10">
                         <Label x:Name="PopupTitleLabel"
                                Text="Lisää uusi varaus"
@@ -242,26 +242,24 @@
                                 TextColor="#2E5632"
                                 ItemDisplayBinding="{Binding PalveluNimi}" />
 
+
+                        <!--TIME AND DATE-->
                         <Label Text="Varattu pvm" FontAttributes="Bold" TextColor="#2E5632"/>
                         <HorizontalStackLayout Spacing="10">
                             <DatePicker x:Name="VarattupvmDatePicker" 
-                                      Date="{Binding}" 
                                       Format="dd.MM.yyyy" 
                                       TextColor="#2E5632"/>
                             <TimePicker x:Name="VarattupvmTimePicker" 
-                                      Time="{Binding}" 
                                       Format="HH:mm" 
                                       TextColor="#2E5632"/>
-                        </HorizontalStackLayout>                        
+                        </HorizontalStackLayout>
 
                         <Label Text="Varauksen alku" FontAttributes="Bold" TextColor="#2E5632"/>
                         <HorizontalStackLayout Spacing="10">
                             <DatePicker x:Name="VarattuAlkuPvmDatePicker"
-                                      Date="{Binding}"
                                       Format="dd.MM.yyyy"
                                       TextColor="#2E5632"/>
                             <TimePicker x:Name="VarattuAlkuPvmTimePicker"
-                                      Time="{Binding}"
                                       Format="HH:mm"
                                       TextColor="#2E5632"/>
                         </HorizontalStackLayout>
@@ -269,11 +267,9 @@
                         <Label Text="Varauksen loppu" FontAttributes="Bold" TextColor="#2E5632"/>
                         <HorizontalStackLayout Spacing="10">
                             <DatePicker x:Name="VarattuLoppuPvmDatePicker"
-                                      Date="{Binding}"
                                       Format="dd.MM.yyyy"
                                       TextColor="#2E5632"/>
                             <TimePicker x:Name="VarattuLoppuPvmTimePicker"
-                                      Time="{Binding }"
                                       Format="HH:mm"
                                       TextColor="#2E5632"/>
                         </HorizontalStackLayout>
@@ -292,14 +288,14 @@
                                     TextColor="Black"
                                     Clicked="OnCancelPopupClicked"
                                     WidthRequest="100"/>
-                            
+
                             <Button Text="Poista"
                                     BackgroundColor="#CCCCCC"
                                     TextColor="Black"
                                     Clicked="OnDeleteClicked"
                                     WidthRequest="100"/>
                         </HorizontalStackLayout>
-                    </VerticalStackLayout>
+                        </VerticalStackLayout>
                 </Frame>
             </Grid>
         </Grid>

@@ -17,6 +17,10 @@ namespace Mokkivaraus.Models
         public DateTime? varausPaiva{get;set;}
         public DateTime? varausAlku{get;set;}
         public DateTime? varausLoppu{get;set;}
+        public TimeSpan? varausPaivaAika { get; set; }
+        public TimeSpan? varausAlkuAika { get; set; }
+        public TimeSpan? varausLoppuAika { get; set; }
         public double? kokonaisKustannus{get;set;}
+        public int Quantity { get; set; }
     }
 }
