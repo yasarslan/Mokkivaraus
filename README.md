@@ -1,6 +1,7 @@
 # Mökkivarausjärjestelmä (Cabin Reservation System)
 A modern and user-friendly cabin reservation system built with .NET MAUI and MySQL. This project was developed as a group assignment at Savonia University of Applied Sciences.
 
+<img src="./Mokkivaraus/Resources/Images/kuvat.gif" width="400"/>
 
 ## Features
 - User-friendly UI built with .NET MAUI (XAML + C#)
