@@ -14,7 +14,7 @@ public partial class RaportitPage : ContentPage
         Loaded += RaportitPage_Loaded; // Event handler for when the page is fully loaded
     }    
 
-    private async void RaportitPage_Loaded(object sender, EventArgs e)
+    private async void RaportitPage_Loaded(object? sender, EventArgs e)
     {
         await LoadAlueet(); // Ensure the area data is loaded when the page is shown
         base.OnAppearing();

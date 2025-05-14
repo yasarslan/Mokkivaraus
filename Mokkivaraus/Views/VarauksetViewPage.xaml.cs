@@ -651,7 +651,9 @@ public partial class VarauksetViewPage : ContentPage
         if (!string.IsNullOrEmpty(varaus.palvelutVarattu)) // Check if there are any services booked
         {
             var palveluNames = varaus.palvelutVarattu.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries); // Split the booked services by comma
-            PalvelutPicker.SelectedItem = filteredPalvelut.FirstOrDefault(p => palveluNames.Any(n => n.Contains(p.PalveluNimi))); // Set the selected service
+            PalvelutPicker.SelectedItem = filteredPalvelut
+    .FirstOrDefault(p => !string.IsNullOrEmpty(p.PalveluNimi) && palveluNames.Any(n => !string.IsNullOrEmpty(n) && n.Contains(p.PalveluNimi)));
+
         }
 
 

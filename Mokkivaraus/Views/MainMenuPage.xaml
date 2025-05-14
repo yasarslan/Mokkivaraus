@@ -145,19 +145,19 @@
                 <Frame BackgroundColor="White" CornerRadius="16" Padding="20" WidthRequest="150">
                     <VerticalStackLayout>
                         <Label Text="Laskuja yhteensä" FontSize="14" TextColor="Gray" />
-                        <Label Text="12" FontSize="24" FontAttributes="Bold" TextColor="#2E5632" />
+                        <Label Text="{Binding TotalInvoices}" FontSize="24" FontAttributes="Bold" TextColor="#2E5632" />
                     </VerticalStackLayout>
                 </Frame>
                 <Frame BackgroundColor="White" CornerRadius="16" Padding="20" WidthRequest="150">
                     <VerticalStackLayout>
                         <Label Text="Avoimet laskut" FontSize="14" TextColor="Gray" />
-                        <Label Text="5" FontSize="24" FontAttributes="Bold" TextColor="#2E5632" />
+                        <Label Text="{Binding OpenInvoices}" FontSize="24" FontAttributes="Bold" TextColor="#2E5632" />
                     </VerticalStackLayout>
                 </Frame>
                 <Frame BackgroundColor="White" CornerRadius="16" Padding="20" WidthRequest="150">
                     <VerticalStackLayout>
                         <Label Text="Maksetut laskut" FontSize="14" TextColor="Gray" />
-                        <Label Text="7" FontSize="24" FontAttributes="Bold" TextColor="#2E5632" />
+                        <Label Text="{Binding PaidInvoices}" FontSize="24" FontAttributes="Bold" TextColor="#2E5632" />
                     </VerticalStackLayout>
                 </Frame>
             </HorizontalStackLayout>
