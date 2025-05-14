@@ -299,19 +299,21 @@ public partial class VarauksetViewPage : ContentPage
         {
             // Filter mokitLista in memory by selected alue
             var filteredMokit = mokitLista.Where(m => m.AlueID == selectedAlue.AlueId).ToList();
-            MokkiPicker.ItemsSource = filteredMokit; // Set the ItemsSource of the Picker to the filtered list
             MokkiPicker.SelectedItem = null; // Clear the selected item
+            MokkiPicker.ItemsSource = filteredMokit; // Set the ItemsSource of the Picker to the filtered list
 
 
             // Filter palvelutLista in memory by selected alue
             var filteredPalvelut = palvelutLista.Where(p => p.AlueID == selectedAlue.AlueId).ToList(); //  Set the ItemsSource of the Picker to the filtered list
-            PalvelutPicker.ItemsSource = filteredPalvelut; // Set the ItemsSource of the Picker to the filtered list
             PalvelutPicker.SelectedItem = null; // Clear the selected item
+            PalvelutPicker.ItemsSource = filteredPalvelut; // Set the ItemsSource of the Picker to the filtered list
 
         }
         else
         {
+            MokkiPicker.SelectedItem = null; // Clear the selected item
             MokkiPicker.ItemsSource = null; // Clear the ItemsSource of the Picker
+            PalvelutPicker.SelectedItem = null; // Clear the selected item
             PalvelutPicker.ItemsSource = null; // Clear the ItemsSource of the Picker
         }
     }
