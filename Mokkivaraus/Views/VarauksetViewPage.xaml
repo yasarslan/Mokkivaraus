@@ -148,7 +148,7 @@
                 <!--Varaukset header -->
                 <CollectionView x:Name="VarausListaView">
                     <CollectionView.Header>
-                        <Frame CornerRadius="5" BackgroundColor="White" Margin="0,0,0,5">
+                        <Frame  CornerRadius="0" Padding="10,5" BackgroundColor="White" Margin="10">
                             <Grid ColumnDefinitions="*,*,*,*,*,*,*,*" ColumnSpacing="10">
                                 <Label Text="Asiakas Nimi" FontAttributes="Bold" TextColor="#2E5632" />
                                 <Label Text="Puhelin" FontAttributes="Bold" TextColor="#2E5632" Grid.Column="1" />
@@ -168,17 +168,17 @@
                     <!--VaraukienLista-->
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <Frame CornerRadius="5" BackgroundColor="White">
+                            <Frame Margin="10,0,10,10" Padding="3" BackgroundColor="White" HasShadow="False" BorderColor="Gray"  CornerRadius="8">
                                 <Frame.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="OnVarausRowTapped" CommandParameter="{Binding .}" />
                                 </Frame.GestureRecognizers>
-                                <Grid ColumnDefinitions="*,*,*,*,*,100,*,*" ColumnSpacing="10">
-                                    <Label Text="{Binding asiakasVarattu.kokonaisNimi}" TextColor="#2E5632" />
-                                    <Label Text="{Binding asiakasVarattu.puhelin}" TextColor="#2E5632" Grid.Column="1" />
+                                <Grid Padding="10" Margin="4" ColumnDefinitions="*,*,*,*,*,100,*,*" ColumnSpacing="10">
+                                    <Label Text="{Binding asiakasVarattu.kokonaisNimi}" TextColor="#2E5632" FontSize="13" />
+                                    <Label Text="{Binding asiakasVarattu.puhelin}" TextColor="#2E5632" Grid.Column="1" FontSize="13" />
                                     <Label Text="{Binding varausPaiva,StringFormat='{0:dd.MM.yyyy}'}" TextColor="#2E5632" Grid.Column="2" />
-                                    <Label Text="{Binding Alue}" TextColor="#2E5632" Grid.Column="3" />
-                                    <Label Text="{Binding mokkiVarattu.MokkiNimi}" TextColor="#2E5632" Grid.Column="4" />
-                                    <Label Text="{Binding palvelutVarattu}" TextColor="#2E5632" LineBreakMode="WordWrap"  Grid.Column="5" />
+                                    <Label Text="{Binding Alue}" TextColor="#2E5632" Grid.Column="3" FontSize="13" />
+                                    <Label Text="{Binding mokkiVarattu.MokkiNimi}" TextColor="#2E5632" FontSize="13" Grid.Column="4" />
+                                    <Label Text="{Binding palvelutVarattu}" TextColor="#2E5632" FontSize="13" LineBreakMode="WordWrap"  Grid.Column="5" />
                                     <Label Text="{Binding varausAlku, StringFormat='{0:dd.MM.yyyy}'}" TextColor="#2E5632" Grid.Column="6" />
                                     <Label Text="{Binding varausLoppu, StringFormat='{0:dd.MM.yyyy}'}" TextColor="#2E5632" Grid.Column="7" />
                                     
@@ -211,7 +211,7 @@
                        HorizontalOptions="Center"
                        VerticalOptions="Center">
                     
-                    <VerticalStackLayout Spacing="10">
+                    <VerticalStackLayout Spacing="8">
                         <Label x:Name="PopupTitleLabel"
                                Text="Lisää uusi varaus"
                                FontSize="20"
@@ -224,7 +224,12 @@
                                     TextColor="#2E5632"
                                     ItemDisplayBinding="{Binding kokonaisNimi}"
                                     SelectedIndexChanged="AsiakasPicker_SelectedIndexChanged"/>
-                        <Entry x:Name="AsiakasPuhelinEntry" Placeholder="Asiakas Puhelin" IsReadOnly="True" TextColor="#2E5632" />
+                        <Entry x:Name="AsiakasPuhelinEntry" 
+                               Placeholder="Asiakas Puhelin"
+                               IsReadOnly="True"
+                          
+                               TextColor="#2E5632"
+                               />
 
                         <Picker x:Name="AluePicker" 
                                 Title="Alue" 
@@ -281,7 +286,9 @@
                                     BackgroundColor="#D8B98F"
                                     TextColor="Black"
                                     Clicked="OnSaveVarausClicked"
-                                    WidthRequest="100"/>
+                                    WidthRequest="100"
+                                    
+                                    />
 
                             <Button Text="Peruuta"
                                     BackgroundColor="#CCCCCC"

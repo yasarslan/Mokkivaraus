@@ -141,7 +141,7 @@
                 <!--Asiakkaiden header -->
                 <CollectionView x:Name="AsiakasListaView">
                     <CollectionView.Header>
-                        <Frame CornerRadius="5" BackgroundColor="White" Margin="5">
+                        <Frame CornerRadius="0" Padding="10,5" BackgroundColor="White" Margin="10">
                             <Grid ColumnDefinitions="*,*,*,*,*,*" ColumnSpacing="10">
                                 <Label Text="Etunimi" FontAttributes="Bold" TextColor="#2E5632" />
                                 <Label Text="Sukunimi" FontAttributes="Bold" TextColor="#2E5632" Grid.Column="1" />
@@ -158,11 +158,11 @@
                     <!--Asiakaslista-->
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <Frame CornerRadius="5" BackgroundColor="White">
+                            <Frame Margin="10,0,10,10" Padding="3" BackgroundColor="White" HasShadow="False" BorderColor="Gray"  CornerRadius="8">
                                 <Frame.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="OnAsiakasRowTapped" CommandParameter="{Binding .}" />
                                 </Frame.GestureRecognizers>
-                                <Grid ColumnDefinitions="*,*,*,*,100,*" ColumnSpacing="10">
+                                <Grid Padding="10,5" ColumnDefinitions="*,*,*,*,*,*,Auto">
                                     <Label Text="{Binding etunimi}" TextColor="#2E5632" />
                                     <Label Text="{Binding sukunimi}" TextColor="#2E5632" Grid.Column="1" />
                                     <Label Text="{Binding postiNo}" TextColor="#2E5632" Grid.Column="2" />

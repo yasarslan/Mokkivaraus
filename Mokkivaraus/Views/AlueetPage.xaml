@@ -149,19 +149,24 @@
                     <!--aluelist-->
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <Frame BackgroundColor="White" Padding="10" Margin="0,5" CornerRadius="10">
+                            <Frame Margin="10,0,10,10" Padding="3" BackgroundColor="White" HasShadow="False" BorderColor="Gray"  CornerRadius="8">
                                 <Frame.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="OnAlueRowTapped" CommandParameter="{Binding .}" />
                                 </Frame.GestureRecognizers>
-                                <Grid ColumnDefinitions="*,Auto">
-                                    <Label Text="{Binding AlueNimi}" TextColor="#2E5632" />
+                                <Grid Padding="10,5" ColumnDefinitions="*,Auto">
+                                    <Label Text="{Binding AlueNimi}" TextColor="#2E5632"
+                                           HorizontalOptions="Start"
+                                            HorizontalTextAlignment="Start"
+                                                VerticalOptions="Center"/>
                                     <Button Text="Poista"
                                      Grid.Column="2"
                                      BackgroundColor="#9B1C1C"
                                      TextColor="White"
-                                     WidthRequest="70"
+                                     WidthRequest="56"
+                                            FontSize="10"
                                      Clicked="OnPoistaClicked"
-                                     CommandParameter="{Binding .}" />                  
+                                     CommandParameter="{Binding .}" 
+                                            />                  
                                 </Grid>
                             </Frame>
                         </DataTemplate>

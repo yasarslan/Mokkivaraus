@@ -158,17 +158,17 @@
 
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <Frame Margin="10,0,10,10" Padding="0" BackgroundColor="White" HasShadow="False" BorderColor="#EEEEEE" CornerRadius="8">
+                            <Frame Margin="10,0,10,10" Padding="3" BackgroundColor="White" HasShadow="False" BorderColor="Gray" CornerRadius="8">
                                 <Frame.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="OnLaskuRowTapped" CommandParameter="{Binding .}" />
                                 </Frame.GestureRecognizers>
                                 <Grid Padding="10,5" ColumnDefinitions="*,*,*,*,*,*,Auto">
-                                    <Label Text="{Binding LaskuNumero}" TextColor="Black" Grid.Column="0" />
-                                    <Label Text="{Binding Asiakas}" TextColor="Black" Grid.Column="1" />
-                                    <Label Text="{Binding Summa}" TextColor="Black" Grid.Column="2" />
-                                    <Label Text="{Binding Tuote}" TextColor="Black" Grid.Column="3" />
-                                    <Label Text="{Binding Tila}" TextColor="Black" Grid.Column="4" />
-                                    <Label Text="{Binding Paivamaara}" TextColor="Black" Grid.Column="5" />
+                                    <Label Text="{Binding LaskuNumero}" TextColor="#2E5632" Grid.Column="0" VerticalOptions="Center" />
+                                    <Label Text="{Binding Asiakas}" TextColor="#2E5632" Grid.Column="1" VerticalOptions="Center" />
+                                    <Label Text="{Binding Summa}" TextColor="#2E5632" Grid.Column="2" VerticalOptions="Center" />
+                                    <Label Text="{Binding Tuote}" TextColor="#2E5632" Grid.Column="3" VerticalOptions="Center" />
+                                    <Label Text="{Binding Tila}" TextColor="#2E5632" Grid.Column="4" VerticalOptions="Center" />
+                                    <Label Text="{Binding Paivamaara}" TextColor="#2E5632" Grid.Column="5" VerticalOptions="Center" />
 
 
                                     

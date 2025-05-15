@@ -118,52 +118,73 @@
             <Label Text="Mökkivaraus Järjestelmään" FontSize="22" FontAttributes="Bold" TextColor="#4E774C" HorizontalOptions="Center" />
 
             <!-- Yhteenveto-ruudut -->
-            <HorizontalStackLayout Spacing="20">
+            <Grid ColumnDefinitions="*,*" Padding="20" RowSpacing="20">
 
-                <Frame BackgroundColor="White" CornerRadius="16" Padding="20" WidthRequest="150">
-                    <VerticalStackLayout>
-                        <Label Text="Mökit yhteensä" FontSize="14" TextColor="Gray"/>
-                        <!-- BACKEND: Mökien kokonaismäärä -->
-                        <Label Text="{Binding TotalCabins}" FontSize="24" FontAttributes="Bold"/>
-                    </VerticalStackLayout>
-                </Frame>
+                <!-- vasen puoli-->
+                <VerticalStackLayout Grid.Column="0" Spacing="20">
 
-                <Frame BackgroundColor="White" CornerRadius="16" Padding="20" WidthRequest="150">
-                    <VerticalStackLayout>
-                        <Label Text="Varauksia aktiivisena" FontSize="14" TextColor="Gray"/>
-                        <!-- BACKEND: Aktiivisten varausten määrä -->
-                        <Label Text="{Binding ActiveReservations}" FontSize="24" FontAttributes="Bold"/>
-                    </VerticalStackLayout>
-                </Frame>
-            </HorizontalStackLayout>
+                    <Frame BackgroundColor="White" WidthRequest="300" CornerRadius="12" Padding="10" HasShadow="False">
+                        <HorizontalStackLayout Spacing="10">
+                            <Label Text="🏡" FontSize="20" />
+                            <Label Text="Mökit yhteensä:" FontAttributes="Bold" TextColor="#2E5632" />
+                            <Label Text="{Binding TotalCabins}" TextColor="#2E5632"
+                                   FontSize="14"
+                                   FontAttributes="Bold" />
+                        </HorizontalStackLayout>
+                    </Frame>
 
-            
-            
-            <!-- Laskut yhteenveto -->
-            
-            <HorizontalStackLayout Spacing="20">
-                <Frame BackgroundColor="White" CornerRadius="16" Padding="20" WidthRequest="150">
-                    <VerticalStackLayout>
-                        <Label Text="Laskuja yhteensä" FontSize="14" TextColor="Gray" />
-                        <Label Text="{Binding TotalInvoices}" FontSize="24" FontAttributes="Bold" TextColor="#2E5632" />
-                    </VerticalStackLayout>
-                </Frame>
-                <Frame BackgroundColor="White" CornerRadius="16" Padding="20" WidthRequest="150">
-                    <VerticalStackLayout>
-                        <Label Text="Avoimet laskut" FontSize="14" TextColor="Gray" />
-                        <Label Text="{Binding OpenInvoices}" FontSize="24" FontAttributes="Bold" TextColor="#2E5632" />
-                    </VerticalStackLayout>
-                </Frame>
-                <Frame BackgroundColor="White" CornerRadius="16" Padding="20" WidthRequest="150">
-                    <VerticalStackLayout>
-                        <Label Text="Maksetut laskut" FontSize="14" TextColor="Gray" />
-                        <Label Text="{Binding PaidInvoices}" FontSize="24" FontAttributes="Bold" TextColor="#2E5632" />
-                    </VerticalStackLayout>
-                </Frame>
-            </HorizontalStackLayout>
+                   
+
+                    <Frame BackgroundColor="White"  WidthRequest="300" CornerRadius="12" Padding="10" HasShadow="False">
+                        <HorizontalStackLayout Spacing="10">
+                            <Label Text="📅" FontSize="20" />
+                            <Label Text="Varauksia aktiivisena:" FontAttributes="Bold" TextColor="#2E5632" />
+                            <Label Text="{Binding ActiveReservations}" TextColor="#2E5632" 
+                                   FontSize="14"
+                                   FontAttributes="Bold" />
+                        </HorizontalStackLayout>
+                    </Frame>
+
+                </VerticalStackLayout>
+
+                <!-- oikea puoli -->
+                <VerticalStackLayout Grid.Column="1" Spacing="20">
+
+                    <Frame BackgroundColor="White"  WidthRequest="300" CornerRadius="12" Padding="10" HasShadow="False">
+                        <HorizontalStackLayout Spacing="10">
+                            <Label Text="🧾" FontSize="20" />
+                            <Label Text="Laskuja yhteensä:" FontAttributes="Bold" TextColor="#2E5632" />
+                            <Label Text="{Binding TotalInvoices}" TextColor="#2E5632" 
+                                   FontSize="14"
+                                   FontAttributes="Bold" />
+                        </HorizontalStackLayout>
+                    </Frame>
+
+                    <Frame BackgroundColor="White"  WidthRequest="300" CornerRadius="12" Padding="10" HasShadow="False">
+                        <HorizontalStackLayout Spacing="10">
+                            <Label Text="📬" FontSize="20" />
+                            <Label Text="Avoimet laskut:" FontAttributes="Bold" TextColor="#2E5632" />
+                            <Label Text="{Binding OpenInvoices}" TextColor="#2E5632" 
+                                   FontSize="14"
+                                   FontAttributes="Bold" />
+                        </HorizontalStackLayout>
+                    </Frame>
+
+                    <Frame BackgroundColor="White"  WidthRequest="300" CornerRadius="12" Padding="10" HasShadow="False">
+                        <HorizontalStackLayout Spacing="10">
+                            <Label Text="✅" FontSize="20" />
+                            <Label Text="Maksetut laskut:" FontAttributes="Bold" TextColor="#2E5632" />
+                            <Label Text="{Binding PaidInvoices}" TextColor="#2E5632"
+                                   FontSize="14"
+                                   FontAttributes="Bold" />
+                        </HorizontalStackLayout>
+                    </Frame>
+
+                </VerticalStackLayout>
+            </Grid>
 
 
-                <VerticalStackLayout Opacity="0.45"  Padding="1" Margin="115" Spacing="5" HorizontalOptions="Center" VerticalOptions="Center">
+            <VerticalStackLayout Opacity="0.45"  Padding="1" Margin="115" Spacing="5" HorizontalOptions="Center" VerticalOptions="Center">
                 <Label  Text="Village Newbies Oy" FontSize="50" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center" Margin="0,0,0,0"/>
                 </VerticalStackLayout>
                     
